@@ -1,5 +1,5 @@
 # Codenames
-I like the game [codenames](https://en.wikipedia.org/wiki/Codenames_(board_game) and since COVID-19 is part of our life
+I like the game [codenames](https://en.wikipedia.org/wiki/Codenames_(board_game)) and since COVID-19 is part of our life
 i have played a lot online with my friends on [this](https://www.horsepaste.com/) website. But i realized that i want to
 play codename pictures instead. So i've decided to create my own.
 
