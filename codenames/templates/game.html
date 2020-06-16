@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block head %}
+    <link rel="stylesheet" href="/static/css/game.css">
+{% endblock %}
+
+
+{% block body %}
+    <center>
+            <h2>{{ game.name }}</h2>
+            <p class="score"> <span class="score" id="fields-left-red">?</span>-<span class="score" id="fields-left-blue">?</span> </p>
+
+            <div class="grid-container" id="playground" data-game-id="{{ game.id }}">
+                 {% for row in rows %}
+                    <div class="row">
+                        {% for img, field_id in row %}
+                            <div class="col">
+                                <img src="/{{ code_root }}/{{ img }}" id="field-{{ field_id }}">
+                            </div>
+                        {% endfor %}
+                    </div>
+                 {% endfor %}
+            </div>
+            <label for="spymaster">Spymaster</label>
+            <input type="checkbox" id="spymaster">
+
+        <form action="" method="post" novalidate>
+			{{ form.csrf_token }}
+			{{ form.submit() }}
+		</form>
+
+        </center>
+{% endblock %}
+
+
+{% block footer %}
+    <script src="/static/js/socket.io.slim.js"></script>
+    <script src="/static/js/game.js"></script>
+{% endblock %}

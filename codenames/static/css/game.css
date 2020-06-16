@@ -1,0 +1,24 @@
+img {
+    max-width: 200px;
+    max-height: 200px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    cursor: pointer;
+}
+
+.col {
+    max-width: 200px;
+}
+
+.score {
+    font-size: 3rem;
+}
+
+#fields-left-red {
+    color: red;
+}
+
+#fields-left-blue {
+    color: blue;
+}

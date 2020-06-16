@@ -1,0 +1,5 @@
+codenames/static/images/codes/*.jpg
+codenames/static/images/codes/*.jpeg
+*~
+__pycache__
+*.pyc
