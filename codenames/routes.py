@@ -26,7 +26,7 @@ def games(game_name=None):
 
     if form.validate_on_submit():
         helper.new_game(game_name, new_round=True)
-        websocket.refresh(game.id)
+        websocket.reload(game.id)
 
     if not game:
         return redirect(url_for('index'))

@@ -3,8 +3,8 @@ from flask_socketio import join_room, emit
 from . import socketio, helper, db, models
 
 
-def refresh(game_id):
-    socketio.emit('refresh', room=game_id)
+def reload(game_id):
+    socketio.emit('reload', room=game_id)
 
 
 @socketio.on('join game')
