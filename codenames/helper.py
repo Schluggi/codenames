@@ -45,10 +45,11 @@ def get_playground(game_id, spymaster=False):
 
 def new_game(game_name, new_round=False):
     #: select random images and create chunks
-    images = [img for img in listdir(join_path(app.root_path, app.config['CODE_ROOT'])) if img.endswith(('.jpeg', '.jpg'))]
-    images = random.sample(images, 20)
-    images = list(zip(images, range(1, 21)))
-    image_chunks = [images[i:i + 5] for i in range(0, 20, 5)]
+    images_codes = [img for img in listdir(join_path(app.root_path, 'static/img/codes/')) if img.endswith(('.jpeg',
+                                                                                                           '.jpg'))]
+    images_codes = random.sample(images_codes, 20)
+    images_codes = list(zip(images_codes, range(1, 21)))
+    image_chunks = [images_codes[i:i + 5] for i in range(0, 20, 5)]
 
     if new_round:
         #: delete all fields

@@ -33,4 +33,4 @@ def games(game_name=None):
 
     image_chunks = flask.json.loads(game.images)
 
-    return render_template('game.html', rows=image_chunks, game=game, form=form, code_root=app.config['CODE_ROOT'])
+    return render_template('game.html', rows=image_chunks, game=game, form=form)
