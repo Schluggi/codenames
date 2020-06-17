@@ -6,6 +6,7 @@ class Game(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.String(255), unique=True, nullable=False)
     images = db.Column(db.Text, nullable=False)
+    cards = db.Column(db.Text, nullable=False)
     fields = db.relationship('Field', backref='game', lazy='dynamic')
 
 
