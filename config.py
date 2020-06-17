@@ -17,4 +17,4 @@ See https://github.com/Schluggi/codenames for more information.
 
 SQLALCHEMY_DATABASE_URI = 'sqlite:///:memory:'
 SECRET_KEY = '<insert your key here>'
-CODE_ROOT = 'static/images/codes/'
+CODE_ROOT = 'static/img/codes/'
