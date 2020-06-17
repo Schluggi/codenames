@@ -42,9 +42,11 @@ $(function() {
         console.log('connected');
     });
 
-    socket.on('refresh', function(data) {
-        location.reload();
-        console.log('refresh');
+    socket.on('reload', function(data) {
+        // reload the page
+        // notice: can't use location.reload() because of browser-post-warning
+        window.location.href = window.location.href;
+        console.log('reload page');
     });
 
     socket.on('playground update', function(data) {
