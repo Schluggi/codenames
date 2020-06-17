@@ -35,6 +35,11 @@ If not already installed you have to install `libapache2-mod-wsgi-py3`. After in
 like in this example:
 
 ```
+<VirtualHost *:80>
+        ServerName codenames.example.org
+        Redirect / https://codenames.example.org/
+</VirtualHost>
+
 <VirtualHost *:443>
         ServerName codenames.example.org
         
