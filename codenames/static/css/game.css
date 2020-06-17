@@ -5,6 +5,7 @@ img {
     margin-left: auto;
     margin-right: auto;
     cursor: pointer;
+    border-radius: 20px;
 }
 
 .col {
