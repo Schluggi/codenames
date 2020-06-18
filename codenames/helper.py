@@ -33,6 +33,7 @@ def get_playground(game_id, spymaster=False):  #: Todo optimize
         fields_assassin = [f.id for f in fields if f.type == 'assassin' and f.hidden is False]
 
     playground = {
+        'spymaster': spymaster,
         'fields': {
             'blue': fields_blue,
             'red': fields_red,

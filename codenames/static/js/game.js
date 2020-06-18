@@ -16,14 +16,16 @@ function update_playground(data){
     $('#score-red').text(data['score']['red']);
     $('#score-blue').text(data['score']['blue']);
 
-    // Reset borders
-    $('.field-img').each( function(){
-        $(this).css('border', '')
-    });
+    if (spymaster == false){
+        // Reset borders
+        $('.field-img').each( function(){
+            $(this).css('border', '')
+        });
+    }
 
     $.each(data['fields'], function(key, field_ids){
         $.each(field_ids, function(index, field_id){
-            if (spymaster){
+            if (data['spymaster']){
                 inking_field(field_id, key);
             }else{
                 // swap images
@@ -52,21 +54,19 @@ $(function() {
         console.log('connected');
     });
 
-    socket.on('reload', function(data) {
+    socket.on('page reload', function(data) {
         // reload the page
         // notice: can't use location.reload() because of browser-post-warning
         window.location.href = window.location.href;
-        console.log('reload page');
+        console.log('page reload');
     });
 
     socket.on('playground update', function(data) {
-        if (spymaster == false){
             update_playground(data);
             console.log('playground update');
-        }
     });
 
-    socket.on('spymaster', function(data) {
+    socket.on('post spymaster', function(data) {
         if (spymaster){
             update_playground(data);
             console.log('playground update');
@@ -96,7 +96,6 @@ $(function() {
         else{
             spymaster = false;
             $('.field-img').removeClass('clickedField');
-
 
             socket.emit('get playground', {
                 game_id: $('#playground').data('game-id')

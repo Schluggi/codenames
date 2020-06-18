@@ -1,17 +1,18 @@
+from flask import  request
 from flask_socketio import join_room, emit
 
 from . import socketio, helper, db, models
 
 
 def reload(game_id):
-    socketio.emit('reload', room=game_id)
+    socketio.emit('page reload', room=game_id)
 
 
 @socketio.on('join game')
 def join_game(data):
     game_id = data['game_id']
     join_room(game_id)
-    emit('playground update', helper.get_playground(game_id), room=game_id)
+    emit('playground update', helper.get_playground(game_id), room=request.sid)
 
 
 @socketio.on('get playground')
@@ -23,7 +24,7 @@ def push_playground(data):
 @socketio.on('get spymaster')
 def push_spymaster(data):
     game_id = data['game_id']
-    emit('spymaster', helper.get_playground(game_id, spymaster=True), room=game_id)
+    emit('post spymaster', helper.get_playground(game_id, spymaster=True), room=request.sid)
 
 
 @socketio.on('field update')
