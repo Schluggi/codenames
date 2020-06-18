@@ -6,27 +6,37 @@ var color_map = {
     'neutral': '#b5b7a2'
 }
 
+
+function inking_field(id, color){
+    $('#field-' + id).css('border', '10px solid '+ color_map[color]);
+}
+
 function update_playground(data){
     // Updating score
-    $('#fields-left-red').text(data['score']['red']);
-    $('#fields-left-blue').text(data['score']['blue']);
+    $('#score-red').text(data['score']['red']);
+    $('#score-blue').text(data['score']['blue']);
 
     // Reset borders
     $('.field-img').each( function(){
         $(this).css('border', '')
     });
 
-    console.log(data);
-
     $.each(data['fields'], function(key, field_ids){
         $.each(field_ids, function(index, field_id){
-            // change border color
-            $('#field-'+ field_id).css('border', '10px solid '+ color_map[key]);
-
-            if (spymaster == false){
+            if (spymaster){
+                inking_field(field_id, key);
+            }else{
                 // swap images
+                var img = document.getElementById('field-'+ field_id);
+
+                img.onload = function(){
+                    inking_field(field_id, key);
+                };
+
                 $('#field-'+ field_id).prop('src', '/static/img/cards/' + key + '/' + data['img'][key][index]);
+                $('#field-'+ field_id).addClass('clickedField');
             }
+
         });
     });
 }
@@ -64,7 +74,7 @@ $(function() {
     });
 
     $('.field-img').click(function(){
-        if (spymaster == false){
+        if (spymaster == false && $(this).hasClass('clickedField') == false){
             socket.emit('field update', {
                 game_id: $('#playground').data('game-id'),
                 field_id: $(this)[0].id
@@ -76,7 +86,7 @@ $(function() {
     $('#spymaster').change(function(){
         if ($('#spymaster').prop('checked')){
             spymaster = true;
-            $('.field-img').css('cursor', 'default');
+            $('.field-img').addClass('clickedField');
 
             socket.emit('get spymaster', {
                 game_id: $('#playground').data('game-id')
@@ -85,7 +95,8 @@ $(function() {
         }
         else{
             spymaster = false;
-            $('.field-img').css('cursor', 'pointer');
+            $('.field-img').removeClass('clickedField');
+
 
             socket.emit('get playground', {
                 game_id: $('#playground').data('game-id')

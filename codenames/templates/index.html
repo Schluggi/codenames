@@ -6,11 +6,10 @@
 
 {% block body %}
 	<center>
-		<h2>Create or join a game!</h2>
 		<br><br><br>
 		<form action="" method="post" novalidate>
 			{{ form.csrf_token }}
-			{{ form.game_name(size=32) }} {{ form.submit() }}
+			{{ form.game_name(size=32) }} {{ form.submit(type_="button", class_="btn btn-success") }}
 		</form>
 	</center>
 {% endblock %}

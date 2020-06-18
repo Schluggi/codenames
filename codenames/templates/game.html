@@ -1,15 +1,32 @@
 {% extends "base.html" %}
 
 {% block head %}
+    <link rel="stylesheet" href="/static/css/bootstrap4-toggle.min.css">
     <link rel="stylesheet" href="/static/css/game.css">
 {% endblock %}
 
+{% block navbar_center %}
+    <label id="game-name" class="navbar-brand">{{ game.name }}</label>
+    <div id="scoreboard">
+        <div id="score-blue"></div>
+        <div id="score-red"></div>
+    </div>
+{% endblock %}
+
+{% block navbar_right %}
+    <form action="" method="post" novalidate id="form-new-game">
+        {{ form.csrf_token }}
+        {{ form.submit(class_="btn btn-danger", type_="button") }}
+    </form>
+
+    <div class="checkbox">
+        <input type="checkbox"  data-toggle="toggle" id="spymaster">
+        <label class="navbar-brand" for="spymaster">Spymaster</label>
+    </div>
+{% endblock %}
 
 {% block body %}
-    <center>
-            <h2>{{ game.name }}</h2>
-            <p class="score"> <span class="score" id="fields-left-red">?</span>-<span class="score" id="fields-left-blue">?</span> </p>
-
+        <div id="layout">
             <div class="grid-container" id="playground" data-game-id="{{ game.id }}">
                  {% for row in rows %}
                     <div class="row">
@@ -21,19 +38,15 @@
                     </div>
                  {% endfor %}
             </div>
-            <label for="spymaster">Spymaster</label>
-            <input type="checkbox" id="spymaster">
+        </div>
 
-        <form action="" method="post" novalidate>
-			{{ form.csrf_token }}
-			{{ form.submit() }}
-		</form>
 
-        </center>
+
 {% endblock %}
 
 
 {% block footer %}
+    <script src="/static/js/bootstrap4-toggle.min.js"></script>
     <script src="/static/js/socket.io.slim.js"></script>
     <script src="/static/js/game.js"></script>
 {% endblock %}

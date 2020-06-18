@@ -9,18 +9,52 @@
     border: 10px solid rgb(227, 227, 227);
 }
 
+/*
 .col {
-    max-width: 200px;
+    padding: 0px;
+    margin: 5px;
+}
+
+.row {
+    margin: 5px;
+}*/
+#game-name {
+    float: left;
+}
+
+#form-new-game{
+    padding-right: 20px;
+}
+
+.navbar-center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%)
+}
+
+#scoreboard {
+    float: left;
+}
+
+#layout {
+    max-width: 1150px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .score {
     font-size: 3rem;
 }
 
-#fields-left-red {
-    color: red;
+#score-red {
+    color: #dd482a;
 }
 
-#fields-left-blue {
-    color: blue;
+#score-blue {
+    color: #3373b3;
+}
+
+.clickedField {
+    cursor: default;
 }
