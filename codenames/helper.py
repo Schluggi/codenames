@@ -10,7 +10,7 @@ from . import models, db, app
 def get_playground(game_id, spymaster=False):  #: Todo optimize
     game = models.Game.query.filter_by(id=game_id).first()
     if not game:
-        print('Game is unavailable')
+        print('[INFO] Game is unavailable')
         return
 
     fields = game.fields.all()
@@ -53,6 +53,10 @@ def new_game(game_name, new_round=False):  #: Todo: optimize
     #: select random images and create chunks
     images_codes = [img for img in listdir(join_path(app.root_path, 'static/img/codes/'))
                     if img.endswith(('.jpeg', '.jpg'))]
+    if len(images_codes) < 20:
+        print('[ERROR] Number of code images is less than 20')
+        return
+
     images_codes = random.sample(images_codes, 20)
     images_codes = list(zip(images_codes, range(1, 21)))
     image_chunks = [images_codes[i:i + 5] for i in range(0, 20, 5)]
