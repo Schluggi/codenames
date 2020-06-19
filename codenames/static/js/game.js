@@ -1,4 +1,7 @@
 var spymaster = false;
+var msg_shown = false;
+var assassin_field_id = -1;
+
 var color_map = {
     'red': '#dd482a',
     'blue': '#3373b3',
@@ -6,6 +9,31 @@ var color_map = {
     'neutral': '#b5b7a2'
 }
 
+function winning(team) {
+    Swal.fire({
+      icon: 'success',
+      title: 'Team ' + team + ' wins!',
+      showConfirmButton: false,
+      timer: 2500
+    });
+
+    msg_shown = true;
+    $('#spymaster').prop('checked', true);
+    $('#spymaster').trigger('change');
+}
+
+function losing() {
+    Swal.fire({
+      icon: 'error',
+      title: 'Game over!',
+      showConfirmButton: false,
+      timer: 2500
+    });
+
+    msg_shown = true;
+    $('#spymaster').prop('checked', true);
+    $('#spymaster').trigger('change');
+}
 
 function inking_field(id, color){
     $('#field-' + id).css('border', '10px solid '+ color_map[color]);
@@ -37,10 +65,27 @@ function update_playground(data){
 
                 $('#field-'+ field_id).prop('src', '/static/img/cards/' + key + '/' + data['img'][key][index]);
                 $('#field-'+ field_id).addClass('clickedField');
+
+                if (key == 'assassin' && msg_shown == false){
+                    losing();
+                }
             }
+
+
 
         });
     });
+
+
+    if (msg_shown == false){
+        if (data['score']['red'] == 0){
+            winning('red');
+        } else if (data['score']['blue'] == 0){
+            winning('blue');
+        }
+
+   }
+
 }
 
 $(function() {
