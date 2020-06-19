@@ -7,6 +7,7 @@
     cursor: pointer;
     border-radius: 20px;
     border: 10px solid rgb(227, 227, 227);
+    transition: border-color 0.5s ease-out;
 }
 
 /*
