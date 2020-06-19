@@ -1,17 +1,20 @@
 {% extends "base.html" %}
 
+
 {% block head %}
     <link rel="stylesheet" href="/static/css/bootstrap4-toggle.min.css">
     <link rel="stylesheet" href="/static/css/game.css">
 {% endblock %}
 
+
 {% block navbar_center %}
     <label id="game-name" class="navbar-brand">{{ game.name }}</label>
     <div id="scoreboard">
-        <div id="score-blue"></div>
-        <div id="score-red"></div>
+        <div id="score-blue">{{ game.score_blue }}</div>
+        <div id="score-red">{{ game.score_red }}</div>
     </div>
 {% endblock %}
+
 
 {% block navbar_right %}
     <form action="" method="post" novalidate id="form-new-game">
@@ -24,6 +27,7 @@
         <label class="navbar-brand" for="spymaster">Spymaster</label>
     </div>
 {% endblock %}
+
 
 {% block body %}
         <div id="layout">
@@ -39,9 +43,6 @@
                  {% endfor %}
             </div>
         </div>
-
-
-
 {% endblock %}
 
 

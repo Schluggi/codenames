@@ -41,8 +41,8 @@ def get_playground(game_id, spymaster=False):  #: Todo optimize
             'assassin': fields_assassin
         },
         'score': {
-            'red': len(all_fields_red) - len(shown_fields_red),
-            'blue': len(all_fields_blue) - len(shown_fields_blue)
+            'red': game.score_red,
+            'blue': game.score_blue
         },
         'img': flask.json.loads(game.cards)
         }
@@ -87,12 +87,15 @@ def new_game(game_name, new_round=False):  #: Todo: optimize
 
     #: select red fields
     fields_red = random.sample(fields, random.choice([7, 8]))
+    counter_fields_red = len(fields_red)
+    game.score_red = counter_fields_red
     for field_id in fields_red:
         fields.pop(fields.index(field_id))
         db.session.add(models.Field(game_id=game.id, id=field_id, type='red'))
 
     #: select blue fields
-    fields_blue = random.sample(fields, 15 - len(fields_red))
+    fields_blue = random.sample(fields, 15 - counter_fields_red)
+    game.score_blue = len(fields_blue)
     for field_id in fields_blue:
         fields.pop(fields.index(field_id))
         db.session.add(models.Field(game_id=game.id, id=field_id, type='blue'))

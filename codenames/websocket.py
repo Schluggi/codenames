@@ -32,8 +32,14 @@ def update_playground(data):
     game_id = data['game_id']
     field_id = data['field_id'].split('field-', 1)[1]
 
-    field = models.Field.query.filter_by(id=field_id, game_id=game_id).first()
+    game = models.Game.query.filter_by(id=game_id).first()
+    field = game.fields.filter_by(id=field_id).first()
     field.hidden = False
+
+    if field.type == 'red':
+        game.score_red -= 1
+    elif field.type == 'blue':
+        game.score_blue -= 1
 
     db.session.commit()
 

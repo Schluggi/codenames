@@ -7,6 +7,8 @@ class Game(db.Model):
     name = db.Column(db.String(255), unique=True, nullable=False)
     images = db.Column(db.Text, nullable=False)
     cards = db.Column(db.Text, nullable=False)
+    score_red = db.Column(db.Integer)
+    score_blue = db.Column(db.Integer)
     fields = db.relationship('Field', backref='game', lazy='dynamic')
 
 
