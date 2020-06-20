@@ -1,5 +1,5 @@
 import flask.json
-from flask import render_template, redirect, url_for
+from flask import render_template, redirect, url_for, flash
 
 from . import app, models, helper, websocket
 from .forms import IndexForm, GameForm
@@ -28,9 +28,18 @@ def games(game_name=None):
         helper.new_game(game_name, new_round=True)
         websocket.reload(game.id)
 
-    if not game:
-        return redirect(url_for('index'))
-
     image_chunks = flask.json.loads(game.images)
 
     return render_template('game.html', rows=image_chunks, game=game, form=form)
+
+
+@app.errorhandler(500)
+def error_500(_):
+    flash('Game error occurred', category='error')
+    return redirect(url_for('index'))
+
+
+@app.errorhandler(404)
+def error_404(_):
+    flash('Game not found', category='error')
+    return redirect(url_for('index'))
