@@ -2,8 +2,8 @@
 [![Donate](https://img.shields.io/badge/Donate-PayPal-blue.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=KPG2MY37LCC24&source=url)
 
 I like the game [codenames](https://en.wikipedia.org/wiki/Codenames_(board_game)) and since COVID-19 is part of our life
-i have played a lot online with my friends on [this](https://www.horsepaste.com/) website. But i realized that i want to
-play codename pictures instead. So i've decided to create my own.
+I have played a lot online with my friends on [this](https://www.horsepaste.com/) website. But I realized that I want to
+play codename pictures instead. So I've decided to create my own.
 
 ## Features
 - Realtime only multiplayer 
