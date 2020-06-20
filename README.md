@@ -17,7 +17,7 @@ play codename pictures instead. So I've decided to create my own.
 
 ## Installation & Quickstart
 1. Clone this repo
-2. Create an and join the virtualenv
+2. Create and and join the virtualenv
 3. Install python requirements
     ```shell script
     $ pip3 install -r requirements.txt   
