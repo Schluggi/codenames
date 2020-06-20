@@ -32,7 +32,7 @@ play codename pictures instead. So I've decided to create my own.
 ### Import images
 To get the best experience it's recommend to buy the original cardboard game and scan all images. In my case I scanned
 all pictures with 400dpi and used [picpunch](https://github.com/Schluggi/picpunch) to cut them to size and render for 
-web (`-q 30`).The new images has to be placed into the corresponding folders.
+web (`--border 5 --quallity 30`).The new images has to be placed into the corresponding folders.
 
 The code images into (at least 20):
 - `codenames/static/images/codes`
