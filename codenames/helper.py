@@ -10,28 +10,23 @@ from . import models, db, app
 def get_playground(game_id, spymaster=False):
     game = models.Game.query.filter_by(id=game_id).first()
 
-    if not game:
-        print('[INFO] Game is unavailable')
-        return
-
-    playground_fields = {}
+    playground = {}
 
     for field_type in ['blue', 'red', 'neutral', 'assassin']:
         if spymaster:
-            playground_fields[field_type] = game.fields.with_entities(models.Field.id).filter_by(type=field_type).all()
+            playground['fields'][field_type] = game.fields.with_entities(models.Field.id).filter_by(
+                type=field_type).all()
         else:
-            playground_fields[field_type] = game.fields.with_entities(models.Field.id).filter_by(type=field_type,
-                                                                                                 hidden=False).all()
+            playground['fields'][field_type] = game.fields.with_entities(models.Field.id).filter_by(
+                type=field_type, hidden=False).all()
 
-    playground = {
-        'spymaster': spymaster,
-        'fields': playground_fields,
-        'img': flask.json.loads(game.cards),
-        'score': {
-            'red': game.score_red,
-            'blue': game.score_blue
-        }
+    playground['spymaster'] = spymaster
+    playground['img'] = flask.json.loads(game.cards)
+    playground['score'] = {
+        'red': game.score_red,
+        'blue': game.score_blue
     }
+
     return playground
 
 
@@ -39,9 +34,6 @@ def new_game(game_name, new_round=False):
     #: select random images and create chunks
     images_codes = [img for img in listdir(join_path(app.root_path, 'static/img/codes/'))
                     if img.endswith(('.jpeg', '.jpg'))]
-    if len(images_codes) < 20:
-        print('[ERROR] Number of code images is less than 20')
-        return
 
     images_codes = random.sample(images_codes, 20)
     images_codes = list(zip(images_codes, range(1, 21)))
