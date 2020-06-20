@@ -6,6 +6,8 @@ import flask
 
 from . import models, db, app
 
+image_types = ['red', 'blue', 'neutral', 'assassin']
+
 
 def get_playground(game_id, spymaster=False):
     #: get the current game and get all field ids of this game
@@ -14,7 +16,7 @@ def get_playground(game_id, spymaster=False):
 
     playground = {'fields': {}}
 
-    for field_type in ['blue', 'red', 'neutral', 'assassin']:
+    for field_type in image_types:
         if spymaster:
             #: get all fields
             playground['fields'][field_type] = fields.filter_by(type=field_type).all()
@@ -41,7 +43,9 @@ def new_game(game_name, new_round=False):
     image_chunks = [images_codes[i:i + 5] for i in range(0, 20, 5)]
 
     cards = {}
-    for card_type in ['red', 'blue', 'neutral', 'assassin']:
+
+    #: get all card images grouped by type
+    for card_type in image_types:
         card_list = [img for img in listdir(join_path(app.root_path, 'static/img/cards/{}'.format(card_type)))
                      if img.endswith(('.jpeg', '.jpg'))]
         random.shuffle(card_list)
