@@ -6,7 +6,7 @@ I have played a lot online with my friends on [this](https://www.horsepaste.com/
 play codename pictures instead. So I've decided to create my own.
 
 ## Features
-- Realtime only multiplayer 
+- Realtime online multiplayer 
 - Does not include any original images (for copyright reasons, but you can import your own images)
 - It's just codenames pictures...
 
