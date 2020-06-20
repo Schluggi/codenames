@@ -18,8 +18,8 @@ def index():
     return render_template('index.html', form=form)
 
 
-@app.route('/games/<game_name>', methods=['GET', 'POST'])
-@app.route('/games/')
+@app.route('/g/<game_name>', methods=['GET', 'POST'])
+@app.route('/g/')
 def games(game_name=None):
     form = GameForm()
     game = models.Game.query.filter_by(name=game_name).first()
