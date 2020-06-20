@@ -9,16 +9,15 @@ from . import models, db, app
 
 def get_playground(game_id, spymaster=False):
     game = models.Game.query.filter_by(id=game_id).first()
+    fields = game.fields.with_entities(models.Field.id)
 
-    playground = {}
+    playground = {'fields': {}}
 
     for field_type in ['blue', 'red', 'neutral', 'assassin']:
         if spymaster:
-            playground['fields'][field_type] = game.fields.with_entities(models.Field.id).filter_by(
-                type=field_type).all()
+            playground['fields'][field_type] = fields.filter_by(type=field_type).all()
         else:
-            playground['fields'][field_type] = game.fields.with_entities(models.Field.id).filter_by(
-                type=field_type, hidden=False).all()
+            playground['fields'][field_type] = fields.filter_by(type=field_type, hidden=False).all()
 
     playground['spymaster'] = spymaster
     playground['img'] = flask.json.loads(game.cards)
