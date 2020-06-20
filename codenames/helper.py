@@ -8,6 +8,7 @@ from . import models, db, app
 
 
 def get_playground(game_id, spymaster=False):
+    #: get the current game and get all field ids of this game
     game = models.Game.query.filter_by(id=game_id).first()
     fields = game.fields.with_entities(models.Field.id)
 
@@ -15,8 +16,10 @@ def get_playground(game_id, spymaster=False):
 
     for field_type in ['blue', 'red', 'neutral', 'assassin']:
         if spymaster:
+            #: get all fields
             playground['fields'][field_type] = fields.filter_by(type=field_type).all()
         else:
+            #: get only fields that are not hidden
             playground['fields'][field_type] = fields.filter_by(type=field_type, hidden=False).all()
 
     playground['spymaster'] = spymaster
@@ -30,10 +33,9 @@ def get_playground(game_id, spymaster=False):
 
 
 def new_game(game_name, new_round=False):
-    #: select random images and create chunks
+    #: get random field images and create chunks
     images_codes = [img for img in listdir(join_path(app.root_path, 'static/img/codes/'))
                     if img.endswith(('.jpeg', '.jpg'))]
-
     images_codes = random.sample(images_codes, 20)
     images_codes = list(zip(images_codes, range(1, 21)))
     image_chunks = [images_codes[i:i + 5] for i in range(0, 20, 5)]
@@ -46,10 +48,12 @@ def new_game(game_name, new_round=False):
         cards[card_type] = card_list
 
     if new_round:
-        #: delete all fields
+        #: get the current game and set new images for cards and fields
         game = models.Game.query.filter_by(name=game_name).first()
         game.images = flask.json.dumps(image_chunks)
         game.cards = flask.json.dumps(cards)
+
+        #: delete all fields
         for field in game.fields:
             db.session.delete(field)
     else:
@@ -57,6 +61,7 @@ def new_game(game_name, new_round=False):
         game = models.Game(name=game_name, images=flask.json.dumps(image_chunks), cards=flask.json.dumps(cards))
         db.session.add(game)
 
+    #: commit sql changes (necessary because otherwise we have no game id)
     db.session.commit()
 
     #: generate fields
@@ -86,4 +91,5 @@ def new_game(game_name, new_round=False):
     for field_id in fields:
         db.session.add(models.Field(game_id=game.id, id=field_id, type='neutral'))
 
+    #: commit sql changes
     db.session.commit()

@@ -12,6 +12,7 @@ def index():
 
         #: check if the game already exists
         if not models.Game.query.filter_by(name=form.game_name.data).first():
+            #: create a new game
             helper.new_game(form.game_name.data)
 
         return redirect(url_for('games', game_name=form.game_name.data))
@@ -25,9 +26,13 @@ def games(game_name=None):
     game = models.Game.query.filter_by(name=game_name).first()
 
     if form.validate_on_submit():
+        #: create a new game
         helper.new_game(game_name, new_round=True)
+
+        #: all clients have to reload the website
         websocket.reload(game.id)
 
+    #: get the field image chunks from database
     image_chunks = flask.json.loads(game.images)
 
     return render_template('game.html', rows=image_chunks, game=game, form=form)
