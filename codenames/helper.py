@@ -7,49 +7,35 @@ import flask
 from . import models, db, app
 
 
-def get_playground(game_id, spymaster=False):  #: Todo optimize
+def get_playground(game_id, spymaster=False):
     game = models.Game.query.filter_by(id=game_id).first()
+
     if not game:
         print('[INFO] Game is unavailable')
         return
 
-    fields = game.fields.all()
+    playground_fields = {}
 
-    all_fields_blue = [f.id for f in fields if f.type == 'blue']
-    all_fields_red = [f.id for f in fields if f.type == 'red']
-
-    shown_fields_blue = [f.id for f in fields if f.type == 'blue' and f.hidden is False]
-    shown_fields_red = [f.id for f in fields if f.type == 'red' and f.hidden is False]
-
-    if spymaster:
-        fields_blue = all_fields_blue
-        fields_red = all_fields_red
-        fields_neutral = [f.id for f in fields if f.type == 'neutral']
-        fields_assassin = [f.id for f in fields if f.type == 'assassin']
-    else:
-        fields_blue = shown_fields_blue
-        fields_red = shown_fields_red
-        fields_neutral = [f.id for f in fields if f.type == 'neutral' and f.hidden is False]
-        fields_assassin = [f.id for f in fields if f.type == 'assassin' and f.hidden is False]
+    for field_type in ['blue', 'red', 'neutral', 'assassin']:
+        if spymaster:
+            playground_fields[field_type] = game.fields.with_entities(models.Field.id).filter_by(type=field_type).all()
+        else:
+            playground_fields[field_type] = game.fields.with_entities(models.Field.id).filter_by(type=field_type,
+                                                                                                 hidden=False).all()
 
     playground = {
         'spymaster': spymaster,
-        'fields': {
-            'blue': fields_blue,
-            'red': fields_red,
-            'neutral': fields_neutral,
-            'assassin': fields_assassin
-        },
+        'fields': playground_fields,
+        'img': flask.json.loads(game.cards),
         'score': {
             'red': game.score_red,
             'blue': game.score_blue
-        },
-        'img': flask.json.loads(game.cards)
         }
+    }
     return playground
 
 
-def new_game(game_name, new_round=False):  #: Todo: optimize
+def new_game(game_name, new_round=False):
     #: select random images and create chunks
     images_codes = [img for img in listdir(join_path(app.root_path, 'static/img/codes/'))
                     if img.endswith(('.jpeg', '.jpg'))]
