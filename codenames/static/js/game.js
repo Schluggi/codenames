@@ -63,7 +63,10 @@ function update_playground(data){
                     inking_field(field_id, key);
                 };
 
-                $('#field-'+ field_id).prop('src', '/static/img/cards/' + key + '/' + data['img'][key][index]);
+                if ($('#field-'+ field_id).prop('src').includes('cards') == false){
+                    $('#field-'+ field_id).prop('src', '/static/img/cards/' + key + '/' + data['img'][key][index]);
+                }
+
                 $('#field-'+ field_id).addClass('clickedField');
 
                 if (key == 'assassin' && msg_shown == false){
