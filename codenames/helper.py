@@ -14,7 +14,19 @@ def get_playground(game_id, spymaster=False):
     game = models.Game.query.filter_by(id=game_id).first()
     fields = game.fields.with_entities(models.Field.id)
 
-    playground = {'fields': {}}
+    playground = {
+        'fields': {},
+        'spymaster': spymaster,
+        'img': flask.json.loads(game.cards),
+        'score': {
+            'red': game.score_red,
+            'blue': game.score_blue
+        },
+        'start_score': {
+            'red': game.start_score_red,
+            'blue': game.start_score_blue
+        }
+    }
 
     for field_type in image_types:
         if spymaster:
@@ -23,13 +35,6 @@ def get_playground(game_id, spymaster=False):
         else:
             #: get only fields that are not hidden
             playground['fields'][field_type] = fields.filter_by(type=field_type, hidden=False).all()
-
-    playground['spymaster'] = spymaster
-    playground['img'] = flask.json.loads(game.cards)
-    playground['score'] = {
-        'red': game.score_red,
-        'blue': game.score_blue
-    }
 
     return playground
 
@@ -73,15 +78,16 @@ def new_game(game_name, new_round=False):
 
     #: select red fields
     fields_red = random.sample(fields, random.choice([7, 8]))
-    counter_fields_red = len(fields_red)
-    game.score_red = counter_fields_red
+    game.score_red = len(fields_red)
+    game.start_score_red = game.score_red
     for field_id in fields_red:
         fields.pop(fields.index(field_id))
         db.session.add(models.Field(game_id=game.id, id=field_id, type='red'))
 
     #: select blue fields
-    fields_blue = random.sample(fields, 15 - counter_fields_red)
+    fields_blue = random.sample(fields, 15 - game.score_red)
     game.score_blue = len(fields_blue)
+    game.start_score_blue = game.score_blue
     for field_id in fields_blue:
         fields.pop(fields.index(field_id))
         db.session.add(models.Field(game_id=game.id, id=field_id, type='blue'))

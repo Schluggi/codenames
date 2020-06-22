@@ -9,6 +9,8 @@ class Game(db.Model):
     cards = db.Column(db.Text, nullable=False)
     score_red = db.Column(db.Integer)
     score_blue = db.Column(db.Integer)
+    start_score_red = db.Column(db.Integer)
+    start_score_blue = db.Column(db.Integer)
     fields = db.relationship('Field', backref='game', lazy='dynamic')
 
 
