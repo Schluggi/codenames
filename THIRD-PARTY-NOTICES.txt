@@ -2,7 +2,7 @@ ThirdPartyNotices
 =================
 
 Component: Bootstrap
-Licensors: 
+Licensor:
 	- Twitter, Inc.
 	- The Bootstrap Authors
 Website: https://getbootstrap.com/
@@ -19,14 +19,14 @@ Website: https://jquery.com/
 License: MIT
 
 Component: bootstrap4-toggle
-Licensors:
+Licensor:
     - Min Hur, The New York Times Company
     - Brent Ely
 Website: https://gitbrent.github.io/bootstrap4-toggle/
 License: MIT
 
 Component: sweetalert2
-Licensors: Tristan Edwards & Limon Monte
+Licensor: Tristan Edwards & Limon Monte
 Website: https://sweetalert2.github.io/
 License: MIT
 
