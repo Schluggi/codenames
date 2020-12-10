@@ -4,7 +4,8 @@ from wtforms.validators import DataRequired
 
 
 class IndexForm(FlaskForm):
-    game_name = StringField(validators=[DataRequired()], render_kw={"placeholder": "MyAwesomeGame"})
+    game_name = StringField(validators=[DataRequired()], render_kw={"placeholder": "Give your game a name"})
+    username = StringField(validators=[DataRequired()], render_kw={"placeholder": "Whats your name?"})
     submit = SubmitField('Go!')
 
 
