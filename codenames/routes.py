@@ -1,5 +1,5 @@
 import flask.json
-from flask import render_template, redirect, url_for, flash
+from flask import render_template, redirect, url_for, flash, make_response
 
 from . import app, models, helper, websocket
 from .forms import IndexForm, GameForm
@@ -36,6 +36,13 @@ def games(game_name=None):
     image_chunks = flask.json.loads(game.images)
 
     return render_template('game.html', rows=image_chunks, game=game, form=form)
+
+
+@app.route('/static/js/game.js')
+def game():
+    resp = make_response(render_template('js/game.js'))
+    resp.headers['Content-type'] = 'text/javascript;charset=UTF-8'
+    return resp
 
 
 @app.errorhandler(500)

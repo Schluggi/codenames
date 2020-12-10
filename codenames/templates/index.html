@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block head %}
-    <link rel="stylesheet" href="/static/css/game.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/game.css') }}">
 {% endblock %}
 
 {% block body %}
@@ -9,7 +9,7 @@
 		<br><br><br>
 		<form action="" method="post" novalidate>
 			{{ form.csrf_token }}
-			{{ form.game_name(size=32) }} {{ form.submit(type_="button", class_="btn btn-success") }}
+			{{ form.game_name(size=32) }} {{ form.submit(type_="button", class_="btn btn-success btn-sm btn-go") }}
 		</form>
 	</center>
 {% endblock %}

@@ -2,39 +2,70 @@
 <html lang="de">
     <head>
         <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Codenames - by Schluggi</title>
-        <link rel="stylesheet" href="/static/css/bootstrap.min.css">
-        <link rel="stylesheet" href="/static/css/bootstrap-grid.min.css">
-        <link rel="stylesheet" href="/static/css/codenames.css">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/fontawesome.min.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/codenames.css') }}">
         {% block head %}
         {% endblock %}
     </head>
 
-    <body>
-        <nav class="navbar navbar-expand-lg  navbar-dark bg-dark">
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-
-            <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
-                <a class="navbar-brand" href="#">Codenames Pictures</a>
-            </div>
-
-            <div class="navbar-center">
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="container-fluid">
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse w-100">
+                    <a class="navbar-brand" href="/">Codenames Pictures</a>
+                    <ul class="ml-auto nav navbar-nav d-md-block d-lg-none">
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">New Game</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" id="spymaster-mobile">Spymaster (off)</a>
+                        </li>
+                    </ul>
+                </div>
                 {% block navbar_center %}
                 {% endblock %}
+                <div class="collapse navbar-collapse w-100 d-none">
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="d-flex flex-row">
+                            {% block navbar_right %}
+                            {% endblock %}
+                        </li>
+
+                    </ul>
+                </div>
             </div>
-
-            {% block navbar_right %}
-            {% endblock %}
         </nav>
+    </header>
 
-        {% block body %}
-        {% endblock %}
+    <body class="site">
+        <main class="site-content">
+            {% block body %}
+            {% endblock %}
+        </main>
     </body>
 
-    <script src="/static/js/jquery.min.js"></script>
-    <script src="/static/js/bootstrap.min.js"></script>
+    <footer>
+        <div class="container-fluid footer">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-12 pt-3">
+                        <p class="float-left"></span>Made by Schluggi</p>
+                        <p class="float-right"><a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=KPG2MY37LCC24&source=url" target="_blank"><i class="fas fa-coffee"></i> Buy me a coffee</a></p>
+                        <p class="float-right mr-3"><a href="https://github.com/Schluggi/codenames" target="_blank"><i class="fab fa-github"></i> GitHub</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
     {% block footer %}
     {% endblock %}
 </html>
