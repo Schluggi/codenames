@@ -65,6 +65,7 @@
 
 #scoreboard {
     float: left;
+    font-weight: bold;
 }
 
 #layout {
