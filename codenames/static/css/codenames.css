@@ -1,1 +1,42 @@
-/* global stuff */
+/* ---------------------------------------------------
+    GLOBAL STUFF
+--------------------------------------------------- */
+/*.container {
+    max-width: 1020px !important;
+}*/
+
+
+.site {
+    min-height: 100vh;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.site-content {
+    flex: 1 0 auto;
+}
+
+header, footer {
+    flex-shrink: 0;
+}
+
+/* ---------------------------------------------------
+    BUTTONS
+--------------------------------------------------- */
+
+.btn-go {
+	margin-top: -4px;
+}
+
+/* ---------------------------------------------------
+    FOOTER
+--------------------------------------------------- */
+footer {
+	color: #FFF;
+	background-color: #212529;
+}
+
+.footer-copyright {
+    font-size: 90%;
+}

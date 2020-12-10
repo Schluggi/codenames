@@ -1,4 +1,4 @@
-.field-img {
+/*.field-img {
     max-width: 200px;
     max-height: 200px;
     display: block;
@@ -8,6 +8,22 @@
     border-radius: 20px;
     border: 10px solid rgb(227, 227, 227);
     transition: border-color 0.5s ease-out;
+}*/
+
+.field-img {
+    max-width: 200px;
+    max-height: 200px;
+    cursor: pointer;
+    border-radius: 20px;
+    border: 10px solid rgb(227, 227, 227);
+    transition: border-color 0.5s ease-out;
+}
+
+.wrapper > div {
+    max-width: 202px;
+    flex: 1 1 auto;
+    text-align: center;
+    margin: calc(5px / 2);
 }
 
 /*
@@ -58,4 +74,31 @@
 
 .clickedField {
     cursor: default;
+}
+
+.pg {
+    width: 30em;
+}
+
+.btn:focus {
+    outline: none;
+    box-shadow: none;
+}
+
+@media (max-width: 576px) {
+    .pg {
+        width: 20em;
+    }
+}
+
+@media (max-width: 420px) {
+    .pg {
+        width: 15em;
+    }
+}
+
+@media (max-width: 353px) {
+    .pg {
+        width: 10em;
+    }
 }
