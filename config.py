@@ -13,3 +13,4 @@ See https://github.com/Schluggi/codenames for more information.
 
 SQLALCHEMY_DATABASE_URI = 'sqlite:///:memory:'
 SECRET_KEY = '<insert your key here>'
+TEMPLATES_AUTO_RELOAD = True
