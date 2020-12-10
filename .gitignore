@@ -1,5 +1,6 @@
 codenames/static/img/**/*.jpg
 codenames/static/img/**/*.jpeg
+config.py
 *~
 *.pyc
 __pycache__
