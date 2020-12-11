@@ -1,7 +1,7 @@
 # Codenames
 [![Donate](https://img.shields.io/badge/Donate-PayPal-blue.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=KPG2MY37LCC24&source=url)
 
-I like the game cardboard game [codenames](https://en.wikipedia.org/wiki/Codenames_(board_game) and now that COVID-19 is
+I like the game cardboard game [codenames](https://en.wikipedia.org/wiki/Codenames_\(board_game\)) and now that COVID-19 is
 part of our life I have played a lot online with my friends on [this](https://www.horsepaste.com/) website. But I 
 realized that I want to play codename pictures instead. So I've decided to create my own.
 
