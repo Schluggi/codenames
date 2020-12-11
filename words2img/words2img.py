@@ -13,7 +13,7 @@ font_type = 'LiberationSans-Bold.ttf'
 font_size = 100
 
 path = Path(__file__).parent.absolute()
-font = ImageFont.truetype(font_type, font_size)
+font = ImageFont.truetype(pjoin(path, font_type), font_size)
 
 for filename in [f for f in listdir(pjoin(path, dir_words)) if f.endswith('.txt')]:
     print(f'Progressing "{filename}"')
