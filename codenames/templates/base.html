@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Codenames - by Schluggi</title>
+        <title>Codenames</title>
         <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
         <link rel="stylesheet" href="{{ url_for('static', filename='css/fontawesome.min.css') }}">
         <link rel="stylesheet" href="{{ url_for('static', filename='css/codenames.css') }}">
@@ -18,7 +18,7 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse w-100">
-                    <a class="navbar-brand" href="/">Codenames Pictures</a>
+                    <a class="navbar-brand" href="{{ request.base_url }}">Codenames</a>
                     <ul class="ml-auto nav navbar-nav d-md-block d-lg-none">
                         <li class="nav-item">
                             <a class="nav-link" href="#">New Game</a>
