@@ -39,9 +39,10 @@ def get_playground(game_id, spymaster=False):
     return playground
 
 
-def new_game(game_name, new_round=False):
+def new_game(game_name, game_mode, new_round=False):
     #: get random field images and create chunks
-    images_codes = [img for img in listdir(join_path(app.root_path, 'static/img/codes/'))
+    mode = join_path(*game_mode.split('_', 1))
+    images_codes = [join_path(mode, img) for img in listdir(join_path(app.root_path, 'static/img/codes/', mode))
                     if img.endswith(('.jpeg', '.jpg'))]
     images_codes = random.sample(images_codes, 20)
     images_codes = list(zip(images_codes, range(1, 21)))
@@ -61,13 +62,15 @@ def new_game(game_name, new_round=False):
         game = models.Game.query.filter_by(name=game_name).first()
         game.images = flask.json.dumps(image_chunks)
         game.cards = flask.json.dumps(cards)
+        game.mode = game_mode
 
         #: delete all fields
         for field in game.fields:
             db.session.delete(field)
     else:
         #: create a new game
-        game = models.Game(name=game_name, images=flask.json.dumps(image_chunks), cards=flask.json.dumps(cards))
+        game = models.Game(name=game_name, mode=game_mode, images=flask.json.dumps(image_chunks),
+                           cards=flask.json.dumps(cards))
         db.session.add(game)
 
     #: commit sql changes (necessary because otherwise we have no game id)

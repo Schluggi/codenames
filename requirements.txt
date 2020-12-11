@@ -8,6 +8,7 @@ Flask-WTF==0.14.3
 itsdangerous==1.1.0
 Jinja2==2.11.2
 MarkupSafe==1.1.1
+Pillow==8.0.1
 python-engineio==3.14.2
 python-socketio==4.6.1
 six==1.15.0

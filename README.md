@@ -6,29 +6,47 @@ part of our life I have played a lot online with my friends on [this](https://ww
 realized that I want to play codename pictures instead. So I've decided to create my own.
 
 ## Features
-- Realtime online multiplayer 
-- Does not include any original images (for copyright reasons, but you can import your own images)
-- It's just codenames pictures...
+- Realtime online multiplayer
+- Multiple game modes:
+    - Codename classic (with words)
+    - Codename pictures  
+        - Does not include any images (for copyright reasons, but you can import your own)
+- Just like the codenames board game...
 
 ## Requirements
-- Python >= 3.7 (lower versions may also work)
+- Python >= 3.6
 - [Almost every](https://docs.sqlalchemy.org/en/13/core/engines.html#database-urls) database engine is supported (SQLite
  in memory by default)
 
 ## Installation & Quickstart
 1. Clone this repo
-2. Create and and join the virtualenv
+2. Create a virtualenv and join them
 3. Install python requirements
     ```shell script
     $ pip3 install -r requirements.txt   
     ```
-4. [Import images](https://github.com/Schluggi/codenames#import-images)
-5. Create a secret key by running `python3 -c "import os; print(os.urandom(24).hex())"` and insert that key into the 
-`config.py` 
+4. Generate text images (for the classic mode) 
+    ```shell script
+    $ ./words2img/words2img.py
+    ```
+    Optional: [Import images](https://github.com/Schluggi/codenames#import-images) for picture mode
+5. Configuration
+    - 5.1 Create a secret key by running `python3 -c "import os; print(os.urandom(24).hex())"` and insert that key into the 
+`config.py`
 6. Test your setup by running `flask run`
 7. If everything works as expected, you should now be able to play at `http://localhost:5000` 
 
 ## Configuring
+### Add new words or languages
+In this example we'll add france as language for the classic mode.
+
+1. Create a language file: `./words2img/words/fr.txt` (one word each line)
+2. Run the script (existing files will be overwritten)
+    ```shell script
+    $ ./words2img/words2img.py
+    ```
+3. Append `classic_fr` to the `GAME_MODES` list in the `config.py`
+
 ### Import images
 To get the best experience it's recommend to buy the original cardboard game and scan all images. In my case I scanned
 all pictures with 400dpi and used [picpunch](https://github.com/Schluggi/picpunch) to cut them to size and render for 
@@ -43,7 +61,7 @@ And the colored team cards (at least 1 each):
 - `codenames/static/images/cards/neutral`
 - `codenames/static/images/cards/red`
 
-The filename does not matter. But the file extension and type has to be JPEG.
+The filename does not matter. But the file extension and type has to be JPEG/JPG.
 
 ### Apache2 with mod_wsgi
 `flask run` works fine but you should'nt use it for production deployment. However you can use Apache2 instead. 

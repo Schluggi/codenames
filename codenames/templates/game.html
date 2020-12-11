@@ -28,9 +28,20 @@
 
 
 {% block navbar_right %}
-    <form action="" method="post" novalidate id="form-new-game">
+    <form action="" method="post" id="form-new-game">
         {{ form.csrf_token }}
-        {{ form.submit(class_="btn btn-primary", type_="button") }}
+        <div class="btn-group">
+            {{ form.submit(class_="btn btn-primary", type_="button") }}
+            {{ form.game_mode(size=1, class_="form-control") }}
+            <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <span class="sr-only">Toggle Dropdown</span>
+            </button>
+            <div class="dropdown-menu">
+                {% for mode in game_modes %}
+                    <a class="dropdown-item game-mode" href="#" data-mode="{{ mode[0] }}">{{ mode[1] }}</a>
+                {% endfor %}
+            </div>
+        </div>
         <input class="btn btn-danger" id="spymaster" name="spymaster" type="button" type_="button" value="Spymaster">
     </form>
 {% endblock %}

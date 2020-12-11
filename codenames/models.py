@@ -5,6 +5,7 @@ class Game(db.Model):
     __tablename__ = 'games'
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.String(255), unique=True, nullable=False)
+    mode = db.Column(db.String(255), nullable=False)
     images = db.Column(db.Text, nullable=False)
     cards = db.Column(db.Text, nullable=False)
     score_red = db.Column(db.Integer)

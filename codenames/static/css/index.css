@@ -1,0 +1,12 @@
+
+#start-game-form #submit {
+    width: 100%;
+}
+
+#game-name {
+    float: left;
+}
+
+#start-game-form {
+    max-width: 300px;
+}

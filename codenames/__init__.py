@@ -6,6 +6,18 @@ app = Flask(__name__)
 app.config.from_object('config')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
+app.game_modes = []
+
+for mode in app.config['GAME_MODES']:
+    if mode == 'pictures':
+        display_name = 'Pictures'
+    elif mode.startswith('classic_'):
+        lang = mode.split('classic_', 1)[1]
+        display_name = f'Classic ({lang})'
+    else:
+        continue
+    app.game_modes.append((mode, display_name))
+
 socketio = SocketIO(app)
 db = SQLAlchemy(app)
 

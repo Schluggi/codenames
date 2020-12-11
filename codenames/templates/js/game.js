@@ -134,26 +134,10 @@ $(function() {
         }
     });
 
-    /*$('#spymaster').change(function(){
-        if ($('#spymaster').prop('checked')){
-            spymaster = true;
-            $('.field-img').addClass('clickedField');
-
-            socket.emit('get spymaster', {
-                game_id: $('#playground').data('game-id')
-            });
-            console.log('get spymaster');
-        }
-        else{
-            spymaster = false;
-            $('.field-img').removeClass('clickedField');
-
-            socket.emit('get playground', {
-                game_id: $('#playground').data('game-id')
-            });
-            console.log('playground update');
-        }
-    });*/
+    $('.game-mode').click(function(){
+        $('#game_mode').val($(this).data('mode'));
+        $('#submit').trigger('click');
+    });
 
     $('#spymaster, #spymaster-mobile').click(function(){
         if (spymaster) {

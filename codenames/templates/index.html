@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block head %}
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/game.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
 {% endblock %}
 
 {% block body %}
@@ -10,10 +10,13 @@
 		<form id="start-game-form" action="" method="post">
 			{{ form.csrf_token }}
 			<div class="form-group">
-				{{ form.game_name(size=32, class_="form-control") }}
+				{{ form.game_name(class_="form-control") }}
 			</div>
 			<div class="form-group">
-				{{ form.username(size=32, class_="form-control") }}
+				{{ form.username(class_="form-control") }}
+			</div>
+			<div class="form-group">
+				{{ form.game_mode(size=1, class_="form-control") }}
 			</div>
 			{{ form.submit(type_="button", class_="btn btn-success") }}
 		</form>

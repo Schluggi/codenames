@@ -9,11 +9,10 @@ from .forms import IndexForm, GameForm
 def index():
     form = IndexForm()
     if form.validate_on_submit():
-
         #: check if the game already exists
         if not models.Game.query.filter_by(name=form.game_name.data).first():
             #: create a new game
-            helper.new_game(form.game_name.data)
+            helper.new_game(form.game_name.data, form.game_mode.data)
 
         return redirect(url_for('games', game_name=form.game_name.data))
     return render_template('index.html', form=form)
@@ -27,7 +26,11 @@ def games(game_name=None):
 
     if form.validate_on_submit():
         #: create a new game
-        helper.new_game(game_name, new_round=True)
+        if form.game_mode.data:
+            game_mode = form.game_mode.data
+        else:
+            game_mode = game.mode
+        helper.new_game(game_name, game_mode, new_round=True)
 
         #: all clients have to reload the website
         websocket.reload(game.id)
@@ -35,7 +38,7 @@ def games(game_name=None):
     #: get the field image chunks from database
     image_chunks = flask.json.loads(game.images)
 
-    return render_template('game.html', rows=image_chunks, game=game, form=form)
+    return render_template('game.html', rows=image_chunks, game=game, form=form, game_modes=app.game_modes)
 
 
 @app.route('/static/js/game.js')
