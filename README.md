@@ -43,7 +43,7 @@ In this example we'll add france as language for the classic mode.
 1. Create a language file: `./words2img/words/fr.txt` (one word each line)
 2. Run the script (existing files will be overwritten)
     ```shell script
-    $ ./words2img/words2img.py
+    $ python3 ./words2img/words2img.py
     ```
 3. Append `classic_fr` to the `GAME_MODES` list in the `config.py`
 
