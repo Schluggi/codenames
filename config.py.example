@@ -26,4 +26,4 @@ SQLALCHEMY_DATABASE_URI = 'sqlite:///:memory:'
 SECRET_KEY = '<insert your key here>'
 TEMPLATES_AUTO_RELOAD = True
 
-GAME_MODES = ['classic_de']
+GAME_MODES = ['classic_de', 'classic_en', 'classic_en-undercover']
