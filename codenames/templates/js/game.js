@@ -141,7 +141,7 @@ $(function() {
         }
         localStorage.setItem('username', result.value);
 
-        socket.emit('join game', {
+        socket.emit('player join', {
             game_id: $('#playground').data('game-id'),
             team: team,
             username: localStorage.getItem('username')
@@ -149,6 +149,9 @@ $(function() {
     })
 
     socket.on('connect', function() {
+        socket.emit('join game', {
+            game_id: $('#playground').data('game-id')
+        });
         console.log('connected');
     });
 

@@ -10,8 +10,13 @@ def reload(game_id):
 
 @socketio.on('join game')
 def join_game(data):
-    game = models.Game.query.filter_by(id=data['game_id']).first()
+    join_room(data['game_id'])
+    emit('playground update', helper.get_playground(data['game_id']), room=request.sid)
 
+
+@socketio.on('player join')
+def join_game(data):
+    game = models.Game.query.filter_by(id=data['game_id']).first()
     if data['team'] == 'red':
         members_red = json.loads(game.members_red)
         members_red.append(data['username'])
@@ -21,8 +26,6 @@ def join_game(data):
         members_blue.append(data['username'])
         game.members_blue = json.dumps(members_blue)
     db.session.commit()
-
-    join_room(data['game_id'])
     emit('playground update', helper.get_playground(data['game_id']), room=data['game_id'])
 
 
