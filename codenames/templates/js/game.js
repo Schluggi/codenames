@@ -177,8 +177,8 @@ $(function() {
             $('#spymaster').val('Spymaster is on');
             $('.field-img').addClass('clickedField');
 
-            socket.emit('get spymaster');
-            console.log('get spymaster');
+            socket.emit('get playground', 'spymaster=True');
+            console.log('playground update (for spymaster)');
         }
     });
 });

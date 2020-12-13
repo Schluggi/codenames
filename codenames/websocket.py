@@ -9,7 +9,7 @@ def reload(game_id):
 
 
 @socketio.on('connect')
-def join_game():
+def connect():
     join_room(session['game_id'])
     emit('playground update', helper.get_playground(session['game_id']), room=request.sid)
 
@@ -32,7 +32,7 @@ def disconnect():
 
 
 @socketio.on('join game')
-def player_join(data):
+def join_game(data):
     game = models.Game.query.filter_by(id=session['game_id']).first()
     session['team'] = data['team']
     session['username'] = data['username']
@@ -50,13 +50,11 @@ def player_join(data):
 
 
 @socketio.on('get playground')
-def push_playground():
-    emit('playground update', helper.get_playground(session['game_id']), room=session['game_id'])
-
-
-@socketio.on('get spymaster')
-def push_spymaster():
-    emit('post spymaster', helper.get_playground(session['game_id'], spymaster=True), room=request.sid)
+def push_playground(spymaster=False):
+    if spymaster:
+        emit('post spymaster', helper.get_playground(session['game_id'], spymaster=True), room=request.sid)
+    else:
+        emit('playground update', helper.get_playground(session['game_id']), room=session['game_id'])
 
 
 @socketio.on('field update')
