@@ -6,6 +6,18 @@
     border: 10px solid rgb(227, 227, 227);
     transition: border-color 0.5s ease-out;
 }
+.popover{
+    width: 30em;
+    max-width: none;
+}
+
+#scoreboard-wrapper-content > h3 {
+    font-width: bold;
+}
+
+#scoreboard-wrapper-content {
+    font-width: bold;
+}
 
 .wrapper > div {
     max-width: 202px;
@@ -40,15 +52,29 @@
     margin-right: auto;
 }
 
+#member-header-blue{
+    background-color: #3373b3;
+    padding-bottom: 15px;
+    margin-left: 10px;
+    max-width: 47%;
+}
+
+#member-header-red{
+    background-color: #dd482a;
+    padding-bottom: 15px;
+    margin-left: 10px;
+    max-width: 47%;
+}
+
 .score {
     font-size: 3rem;
 }
 
-#score-red {
+.score-red {
     color: #dd482a;
 }
 
-#score-blue {
+.score-blue {
     color: #3373b3;
 }
 

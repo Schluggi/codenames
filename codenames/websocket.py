@@ -1,4 +1,4 @@
-from flask import  request
+from flask import request, json
 from flask_socketio import join_room, emit
 
 from . import socketio, helper, db, models
@@ -10,29 +10,37 @@ def reload(game_id):
 
 @socketio.on('join game')
 def join_game(data):
-    game_id = data['game_id']
-    join_room(game_id)
-    emit('playground update', helper.get_playground(game_id), room=request.sid)
+    game = models.Game.query.filter_by(id=data['game_id']).first()
+
+    if data['team'] == 'red':
+        members_red = json.loads(game.members_red)
+        members_red.append(data['username'])
+        game.members_red = json.dumps(members_red)
+    else:
+        members_blue = json.loads(game.members_blue)
+        members_blue.append(data['username'])
+        game.members_blue = json.dumps(members_blue)
+    db.session.commit()
+
+    join_room(data['game_id'])
+    emit('playground update', helper.get_playground(data['game_id']), room=data['game_id'])
 
 
 @socketio.on('get playground')
 def push_playground(data):
-    game_id = data['game_id']
-    emit('playground update', helper.get_playground(data['game_id']), room=game_id)
+    emit('playground update', helper.get_playground(data['game_id']), room=data['game_id'])
 
 
 @socketio.on('get spymaster')
 def push_spymaster(data):
-    game_id = data['game_id']
-    emit('post spymaster', helper.get_playground(game_id, spymaster=True), room=request.sid)
+    emit('post spymaster', helper.get_playground(data['game_id'], spymaster=True), room=request.sid)
 
 
 @socketio.on('field update')
 def update_playground(data):
-    game_id = data['game_id']
     field_id = data['field_id'].split('field-', 1)[1]
 
-    game = models.Game.query.filter_by(id=game_id).first()
+    game = models.Game.query.filter_by(id=data['game_id']).first()
     field = game.fields.filter_by(id=field_id).first()
     field.hidden = False
 
@@ -43,4 +51,4 @@ def update_playground(data):
 
     db.session.commit()
 
-    emit('playground update', helper.get_playground(game_id), room=game_id)
+    emit('playground update', helper.get_playground(data['game_id']), room=data['game_id'])

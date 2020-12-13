@@ -9,11 +9,24 @@
 
 {% block navbar_center %}
 <!-- order-first -->
-<div class="order-lg-0 mx-0 d-flex flex-row">
+<div class="d-none" id="scoreboard-wrapper-content">
+
+    <div class="row">
+        <div class="col-sm-6 score score-blue" id="member-header-blue"></div>
+        <div class="col-sm-6 score score-red" id="member-header-red"></div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-6 score-blue" id="members-blue"><!-- added by js --></div>
+        <div class="col-sm-6 score-red" id="members-red"><!-- added by js --></div>
+    </div>
+</div>
+
+<div id="scoreboard-wrapper" class="order-lg-0 mx-0 d-flex flex-row" data-placement="bottom" data-html="true">
     <a class="navbar-brand mr-2" href="/">{{ game.name }}</a>
     <div id="scoreboard">
-        <div id="score-blue">{{ game.score_blue }}</div>
-        <div id="score-red">{{ game.score_red }}</div>
+        <div id="score-blue" class="score-blue">{{ game.score_blue }}</div>
+        <div id="score-red" class="score-red">{{ game.score_red }}</div>
     </div>
     <div class="ml-2 d-flex flex-column">
         <div class="progress mt-1 pg" id="progress-blue"> <!-- 50em = half the screen width -->
@@ -31,9 +44,10 @@
     <form action="" method="post" id="form-new-game">
         {{ form.csrf_token }}
         <div class="btn-group">
-            {{ form.submit(class_="btn btn-primary", type_="button") }}
+            {{ form.new_game(class_="btn btn-success", type_="button") }}
+
             {{ form.game_mode(size=1, class_="form-control") }}
-            <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <button type="button" class="btn btn-success dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <span class="sr-only">Toggle Dropdown</span>
             </button>
             <div class="dropdown-menu">
@@ -42,7 +56,7 @@
                 {% endfor %}
             </div>
         </div>
-        <input class="btn btn-danger" id="spymaster" name="spymaster" type="button" type_="button" value="Spymaster">
+        <input class="btn btn-success" id="spymaster" name="spymaster" type="button" type_="button" value="Spymaster is off">
     </form>
 {% endblock %}
 

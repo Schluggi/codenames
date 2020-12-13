@@ -38,7 +38,8 @@ def games(game_name=None):
     #: get the field image chunks from database
     image_chunks = flask.json.loads(game.images)
 
-    return render_template('game.html', rows=image_chunks, game=game, form=form, game_modes=app.game_modes)
+    return render_template('game.html', rows=image_chunks, game=game, form=form, game_modes=app.game_modes,
+                           members_red=game.members_red, members_blue=game.members_blue)
 
 
 @app.route('/static/js/game.js')

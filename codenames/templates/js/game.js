@@ -1,6 +1,7 @@
 var spymaster = false;
 var msg_shown = false;
 var assassin_field_id = -1;
+var team = '';
 
 var color_map = {
     'red': '#dd482a',
@@ -45,7 +46,20 @@ function update_playground(data){
     $('#score-blue').text(data['score']['blue']);
     $('#progress-red .progress-bar').css('width', 100 - data['score']['red'] / data['start_score']['red'] * 100  + '%');
     $('#progress-blue .progress-bar').css('width', 100 - data['score']['blue'] / data['start_score']['blue'] * 100  + '%');
-    
+
+    // Updating members
+    $('#members-blue').empty();
+    $('#members-red').empty();
+
+    $.each(data['members']['blue'], function(i, username){
+        $('#members-blue').append('<p>' + username + '</p>')
+    });
+
+    $.each(data['members']['red'], function(i, username){
+        $('#members-red').append('<p>' + username + '</p>');
+    });
+
+
     if (spymaster == false){
         // Reset borders
         $('.field-img').each( function(){
@@ -88,7 +102,6 @@ function update_playground(data){
         } else if (data['score']['blue'] == 0){
             winning('blue');
         }
-
    }
 
 }
@@ -97,10 +110,45 @@ $(function() {
     var origin = new URL(window.location.href).origin;
     var socket = io(origin, { "path": "{{ request.script_root }}/socket.io/" });
 
-    socket.on('connect', function() {
+    $('#scoreboard-wrapper').popover({
+        content: function(){
+            return $('#scoreboard-wrapper-content').html();
+        },
+        //trigger: 'hover',
+    })
+
+
+    Swal.fire({
+        title: 'Choose a username and join a team!',
+        showDenyButton: true,
+        confirmButtonText: 'BLUE',
+        denyButtonText: 'RED',
+        input: 'text',
+        inputValue: localStorage.getItem('username'),
+        inputAttributes: {
+            placeholder: 'Username',
+            required: true
+        },
+        allowEscapeKey: false,
+        allowOutsideClick: false,
+        allowEnterKey: false,
+        returnInputValueOnDeny: true
+    }).then((result) => {
+        if (result.isConfirmed) {
+            team = "blue";
+        } else if (result.isDenied) {
+            team = "red";
+        }
+        localStorage.setItem('username', result.value);
+
         socket.emit('join game', {
-            game_id: $('#playground').data('game-id')
+            game_id: $('#playground').data('game-id'),
+            team: team,
+            username: localStorage.getItem('username')
         });
+    })
+
+    socket.on('connect', function() {
         console.log('connected');
     });
 
@@ -141,8 +189,8 @@ $(function() {
     $('#spymaster, #spymaster-mobile').click(function(){
         if (spymaster) {
             spymaster = false;
-            $('#spymaster-mobile').empty().html('Spymaster (off)');
-            $('#spymaster').removeClass('btn-success').addClass('btn-danger');
+            $('#spymaster-mobile').empty().html('Spymaster is off');
+            $('#spymaster').val('Spymaster is off');
             $('.field-img').removeClass('clickedField');
 
             socket.emit('get playground', {
@@ -151,8 +199,8 @@ $(function() {
             console.log('playground update');
         } else {
             spymaster = true;
-            $('#spymaster-mobile').empty().html('Spymaster (on)');
-            $('#spymaster').removeClass('btn-danger').addClass('btn-success');
+            $('#spymaster-mobile').empty().html('Spymaster is on');
+            $('#spymaster').val('Spymaster is on');
             $('.field-img').addClass('clickedField');
 
             socket.emit('get spymaster', {

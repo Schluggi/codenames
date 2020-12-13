@@ -2,7 +2,7 @@ import random
 from os import listdir
 from os.path import join as join_path
 
-import flask
+from flask import json
 
 from . import models, db, app
 
@@ -17,10 +17,14 @@ def get_playground(game_id, spymaster=False):
     playground = {
         'fields': {},
         'spymaster': spymaster,
-        'img': flask.json.loads(game.cards),
+        'img': json.loads(game.cards),
         'score': {
             'red': game.score_red,
             'blue': game.score_blue
+        },
+        'members': {
+            'red': json.loads(game.members_red),
+            'blue': json.loads(game.members_blue)
         },
         'start_score': {
             'red': game.start_score_red,
@@ -60,17 +64,19 @@ def new_game(game_name, game_mode, new_round=False):
     if new_round:
         #: get the current game and set new images for cards and fields
         game = models.Game.query.filter_by(name=game_name).first()
-        game.images = flask.json.dumps(image_chunks)
-        game.cards = flask.json.dumps(cards)
+        game.images = json.dumps(image_chunks)
+        game.cards = json.dumps(cards)
         game.mode = game_mode
+        game.members_red = '[]'
+        game.members_blue = '[]'
 
         #: delete all fields
         for field in game.fields:
             db.session.delete(field)
     else:
         #: create a new game
-        game = models.Game(name=game_name, mode=game_mode, images=flask.json.dumps(image_chunks),
-                           cards=flask.json.dumps(cards))
+        game = models.Game(name=game_name, mode=game_mode, images=json.dumps(image_chunks),
+                           cards=json.dumps(cards))
         db.session.add(game)
 
     #: commit sql changes (necessary because otherwise we have no game id)
