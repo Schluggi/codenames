@@ -8,8 +8,26 @@ def reload(game_id):
     socketio.emit('page reload', room=game_id)
 
 
+@socketio.on('disconnect')
+def disconnect():
+    game = models.Game.query.filter_by(id=session['game_id']).first()
+
+    if session['team'] == 'red':
+        members_red = json.loads(game.members_red)
+        members_red = members_red.remove(session['username'])
+        game.members_red = json.dumps(members_red)
+    else:
+        members_blue = json.loads(game.members_blue)
+        members_blue = members_blue.remove(session['username'])
+        game.members_blue = json.dumps(members_blue)
+    db.session.commit()
+
+    emit('playground update', helper.get_playground(session['game_id']), room=session['game_id'])
+
+
 @socketio.on('join game')
 def join_game(data):
+    session['game_id'] = data['game_id']
     join_room(data['game_id'])
     emit('playground update', helper.get_playground(data['game_id']), room=request.sid)
 
@@ -18,6 +36,7 @@ def join_game(data):
 def join_game(data):
     game = models.Game.query.filter_by(id=data['game_id']).first()
     session['team'] = data['team']
+    session['username'] = data['username']
 
     if data['team'] == 'red':
         members_red = json.loads(game.members_red)
