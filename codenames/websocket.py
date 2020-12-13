@@ -8,6 +8,12 @@ def reload(game_id):
     socketio.emit('page reload', room=game_id)
 
 
+@socketio.on('connect')
+def join_game():
+    join_room(session['game_id'])
+    emit('playground update', helper.get_playground(session['game_id']), room=request.sid)
+
+
 @socketio.on('disconnect')
 def disconnect():
     game = models.Game.query.filter_by(id=session['game_id']).first()
@@ -26,15 +32,8 @@ def disconnect():
 
 
 @socketio.on('join game')
-def join_game(data):
-    session['game_id'] = data['game_id']
-    join_room(data['game_id'])
-    emit('playground update', helper.get_playground(data['game_id']), room=request.sid)
-
-
-@socketio.on('player join')
-def join_game(data):
-    game = models.Game.query.filter_by(id=data['game_id']).first()
+def player_join(data):
+    game = models.Game.query.filter_by(id=session['game_id']).first()
     session['team'] = data['team']
     session['username'] = data['username']
 
@@ -47,24 +46,24 @@ def join_game(data):
         members_blue.append(data['username'])
         game.members_blue = json.dumps(members_blue)
     db.session.commit()
-    emit('playground update', helper.get_playground(data['game_id']), room=data['game_id'])
+    emit('playground update', helper.get_playground(session['game_id']), room=session['game_id'])
 
 
 @socketio.on('get playground')
-def push_playground(data):
-    emit('playground update', helper.get_playground(data['game_id']), room=data['game_id'])
+def push_playground():
+    emit('playground update', helper.get_playground(session['game_id']), room=session['game_id'])
 
 
 @socketio.on('get spymaster')
-def push_spymaster(data):
-    emit('post spymaster', helper.get_playground(data['game_id'], spymaster=True), room=request.sid)
+def push_spymaster():
+    emit('post spymaster', helper.get_playground(session['game_id'], spymaster=True), room=request.sid)
 
 
 @socketio.on('field update')
 def update_playground(data):
     field_id = data['field_id'].split('field-', 1)[1]
 
-    game = models.Game.query.filter_by(id=data['game_id']).first()
+    game = models.Game.query.filter_by(id=session['game_id']).first()
     field = game.fields.filter_by(id=field_id).first()
     field.hidden = False
 
@@ -77,12 +76,12 @@ def update_playground(data):
 
     if field.type == 'assassin':
         if session['team'] == 'red':
-            emit('game won', 'blue', room=data['game_id'])
+            emit('game won', 'blue', room=session['game_id'])
         else:
-            emit('game won', 'red', room=data['game_id'])
+            emit('game won', 'red', room=session['game_id'])
     elif game.score_red == 0:
-        emit('game won', 'red', room=data['game_id'])
+        emit('game won', 'red', room=session['game_id'])
     elif game.score_blue == 0:
-        emit('game won', 'blue', room=data['game_id'])
+        emit('game won', 'blue', room=session['game_id'])
 
-    emit('playground update', helper.get_playground(data['game_id']), room=data['game_id'])
+    emit('playground update', helper.get_playground(session['game_id']), room=session['game_id'])

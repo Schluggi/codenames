@@ -99,19 +99,12 @@ $(function() {
         }
         localStorage.setItem('username', result.value);
 
-        socket.emit('player join', {
+        socket.emit('join game', {
             game_id: $('#playground').data('game-id'),
             team: team,
             username: localStorage.getItem('username')
         });
     })
-
-    socket.on('connect', function() {
-        socket.emit('join game', {
-            game_id: $('#playground').data('game-id')
-        });
-        console.log('connected');
-    });
 
     socket.on('page reload', function(data) {
         // reload the page
@@ -158,7 +151,6 @@ $(function() {
     $('.field-img').click(function(){
         if (spymaster == false && $(this).hasClass('clickedField') == false){
             socket.emit('field update', {
-                game_id: $('#playground').data('game-id'),
                 field_id: $(this)[0].id
             });
             console.log('field update');
@@ -177,9 +169,7 @@ $(function() {
             $('#spymaster').val('Spymaster is off');
             $('.field-img').removeClass('clickedField');
 
-            socket.emit('get playground', {
-                game_id: $('#playground').data('game-id')
-            });
+            socket.emit('get playground');
             console.log('playground update');
         } else {
             spymaster = true;
@@ -187,9 +177,7 @@ $(function() {
             $('#spymaster').val('Spymaster is on');
             $('.field-img').addClass('clickedField');
 
-            socket.emit('get spymaster', {
-                game_id: $('#playground').data('game-id')
-            });
+            socket.emit('get spymaster');
             console.log('get spymaster');
         }
     });

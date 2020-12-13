@@ -1,5 +1,4 @@
-import flask.json
-from flask import render_template, redirect, url_for, flash, make_response
+from flask import render_template, redirect, url_for, flash, make_response, session, json
 
 from . import app, models, helper, websocket
 from .forms import IndexForm, GameForm
@@ -23,6 +22,7 @@ def index():
 def games(game_name=None):
     form = GameForm()
     game = models.Game.query.filter_by(name=game_name).first()
+    session['game_id'] = game.id
 
     if form.validate_on_submit():
         #: create a new game
@@ -36,7 +36,7 @@ def games(game_name=None):
         websocket.reload(game.id)
 
     #: get the field image chunks from database
-    image_chunks = flask.json.loads(game.images)
+    image_chunks = json.loads(game.images)
 
     return render_template('game.html', rows=image_chunks, game=game, form=form, game_modes=app.game_modes,
                            members_red=game.members_red, members_blue=game.members_blue)
