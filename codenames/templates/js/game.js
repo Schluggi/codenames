@@ -102,7 +102,6 @@ $(function() {
             game_id: $('#playground').data('game-id')
         });
         console.log('connected');
-        console.log(socket);
     });
 
     socket.on('page reload', function(data) {
