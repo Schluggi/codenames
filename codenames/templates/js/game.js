@@ -167,7 +167,7 @@ $(function() {
 
     $('.game-mode').click(function(){
         $('#game_mode').val($(this).data('mode'));
-        $('#submit').trigger('click');
+        $('#new_game').trigger('click');
     });
 
     $('#spymaster, #spymaster-mobile').click(function(){
