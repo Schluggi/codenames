@@ -10,32 +10,6 @@ var color_map = {
     'neutral': '#b5b7a2'
 }
 
-function winning(team) {
-    Swal.fire({
-      icon: 'success',
-      title: 'Team ' + team + ' wins!',
-      showConfirmButton: false,
-      timer: 2500
-    });
-
-    msg_shown = true;
-    $('#spymaster').prop('checked', true);
-    $('#spymaster').trigger('change');
-}
-
-function losing() {
-    Swal.fire({
-      icon: 'error',
-      title: 'Game over!',
-      showConfirmButton: false,
-      timer: 2500
-    });
-
-    msg_shown = true;
-    $('#spymaster').prop('checked', true);
-    $('#spymaster').trigger('change');
-}
-
 function inking_field(id, color){
     $('#field-' + id).css('border', '10px solid '+ color_map[color]);
 }
@@ -84,25 +58,12 @@ function update_playground(data){
                 }
 
                 $('#field-'+ field_id).addClass('clickedField');
-
-                if (key == 'assassin' && msg_shown == false){
-                    losing();
-                }
             }
 
 
 
         });
     });
-
-
-    if (msg_shown == false){
-        if (data['score']['red'] == 0){
-            winning('red');
-        } else if (data['score']['blue'] == 0){
-            winning('blue');
-        }
-   }
 
 }
 
@@ -114,7 +75,7 @@ $(function() {
         content: function(){
             return $('#scoreboard-wrapper-content').html();
         },
-        //trigger: 'hover',
+        trigger: 'hover',
     })
 
 
@@ -160,6 +121,28 @@ $(function() {
         // notice: can't use location.reload() because of browser-post-warning
         window.location.href = window.location.href;
         console.log('page reload');
+    });
+
+    socket.on('game won', function(data) {
+        console.log(data);
+        if (msg_shown == false){
+            if (data == team){
+                Swal.fire({
+                    icon: 'success',
+                    title: 'YOU WIN!',
+                    showConfirmButton: false,
+                    timer: 4000
+                });
+            } else {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'YOU LOST!',
+                    showConfirmButton: false,
+                    timer: 4000
+                });
+            }
+            console.log(data + 'won this game');
+        }
     });
 
     socket.on('playground update', function(data) {

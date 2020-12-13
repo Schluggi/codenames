@@ -1,4 +1,4 @@
-from flask import request, json
+from flask import request, json, session
 from flask_socketio import join_room, emit
 
 from . import socketio, helper, db, models
@@ -17,6 +17,8 @@ def join_game(data):
 @socketio.on('player join')
 def join_game(data):
     game = models.Game.query.filter_by(id=data['game_id']).first()
+    session['team'] = data['team']
+
     if data['team'] == 'red':
         members_red = json.loads(game.members_red)
         members_red.append(data['username'])
@@ -53,5 +55,15 @@ def update_playground(data):
         game.score_blue -= 1
 
     db.session.commit()
+
+    if field.type == 'assassin':
+        if session['team'] == 'red':
+            emit('game won', 'blue', room=data['game_id'])
+        else:
+            emit('game won', 'red', room=data['game_id'])
+    elif game.score_red == 0:
+        emit('game won', 'red', room=data['game_id'])
+    elif game.score_blue == 0:
+        emit('game won', 'blue', room=data['game_id'])
 
     emit('playground update', helper.get_playground(data['game_id']), room=data['game_id'])
