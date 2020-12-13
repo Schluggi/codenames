@@ -126,7 +126,7 @@ $(function() {
             if (data == team){
                 Swal.fire({
                     icon: 'success',
-                    title: 'YOU WIN!',
+                    title: 'YOU WON!',
                     showConfirmButton: false,
                     timer: 4000
                 });
