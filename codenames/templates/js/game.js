@@ -59,9 +59,6 @@ function update_playground(data){
 
                 $('#field-'+ field_id).addClass('clickedField');
             }
-
-
-
         });
     });
 
@@ -141,6 +138,7 @@ $(function() {
                     timer: 4000
                 });
             }
+            msg_shown = true;
             console.log(data + 'won this game');
         }
     });
