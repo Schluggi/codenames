@@ -24,6 +24,7 @@ def games(game_name=None):
     game = models.Game.query.filter_by(name=game_name).first()
 
     if not game:
+        flash('Game not found', category='error')
         return redirect(url_for('index'))
 
     session['game_id'] = game.id
@@ -54,11 +55,11 @@ def game():
 
 @app.errorhandler(500)
 def error_500(_):
-    flash('Game error occurred', category='error')
+    flash('Game error occurred (500)', category='error')
     return redirect(url_for('index'))
 
 
 @app.errorhandler(404)
 def error_404(_):
-    flash('Game not found', category='error')
+    flash('Page not found (404)', category='error')
     return redirect(url_for('index'))

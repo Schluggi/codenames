@@ -28,7 +28,8 @@ def disconnect():
             game.members_blue = json.dumps(members_blue)
         db.session.commit()
 
-    emit('playground update', helper.get_playground(session['game_id']), room=session['game_id'])
+        emit('msg', {'type': 'info', 'msg': f'{session["username"]} has left the game'}, room=session['game_id'])
+        emit('playground update', helper.get_playground(session['game_id']), room=session['game_id'])
 
 
 @socketio.on('join game')
@@ -46,12 +47,15 @@ def join_game(data):
         members_blue.append(data['username'])
         game.members_blue = json.dumps(members_blue)
     db.session.commit()
+    emit('msg', {'type': 'info', 'msg': f'{session["username"]} has joined the {session["team"]} team'},
+         room=session['game_id'])
     emit('playground update', helper.get_playground(session['game_id']), room=session['game_id'])
 
 
 @socketio.on('get playground')
 def push_playground(spymaster=False):
     if spymaster:
+        emit('msg', {'type': 'info', 'msg': f'{session["username"]} is now spymaster'}, room=session['game_id'])
         emit('post spymaster', helper.get_playground(session['game_id'], spymaster=True), room=request.sid)
     else:
         emit('playground update', helper.get_playground(session['game_id']), room=session['game_id'])

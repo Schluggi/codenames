@@ -6,6 +6,7 @@
         <title>Codenames</title>
         <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
         <link rel="stylesheet" href="{{ url_for('static', filename='css/fontawesome.min.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/toast.min.css') }}">
         <link rel="stylesheet" href="{{ url_for('static', filename='css/codenames.css') }}">
         {% block head %}
         {% endblock %}
@@ -47,6 +48,16 @@
             {% block body %}
             {% endblock %}
         </main>
+
+        <div id="messages" class="d-none">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="d-none" data-category="{{ category }}">{{ message }}</div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+        </div>
     </body>
 
     <footer>
@@ -66,6 +77,8 @@
     <script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
     <script src="{{ url_for('static', filename='js/popper.min.js') }}"></script>
     <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/toast.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/global.js') }}"></script>
     {% block footer %}
     {% endblock %}
 </html>
