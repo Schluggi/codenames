@@ -73,7 +73,7 @@ $(function() {
             return $('#scoreboard-wrapper-content').html();
         },
         trigger: 'hover',
-    })
+    });
 
 
     Swal.fire({
@@ -146,6 +146,10 @@ $(function() {
             update_playground(data);
             console.log('playground update');
         }
+    });
+
+    socket.on('msg', function(data){
+            $.snack(data['type'], data['msg'], 3000)
     });
 
     $('.field-img').click(function(){
