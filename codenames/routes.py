@@ -12,6 +12,7 @@ def index():
         if not models.Game.query.filter_by(name=form.game_name.data).first():
             #: create a new game
             helper.new_game(form.game_name.data, form.game_mode.data)
+            flash('New game created', category='success')
 
         return redirect(url_for('games', game_name=form.game_name.data))
     return render_template('index.html', form=form)
@@ -36,6 +37,7 @@ def games(game_name=None):
         else:
             game_mode = game.mode
         helper.new_game(game_name, game_mode, new_round=True)
+        flash('New round started', category='success')
 
         #: all clients have to reload the website
         websocket.reload(game.id)

@@ -14,7 +14,7 @@ $(function() {
     };
 
      $.each($('#messages').children(), function(i, obj){
-        $.snack($(obj).data('category'), $(obj).text(), 3000);
+        $.snack($(obj).data('category'), $(obj).text(), 5000);
     });
 
 });

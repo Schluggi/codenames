@@ -149,7 +149,7 @@ $(function() {
     });
 
     socket.on('msg', function(data){
-            $.snack(data['type'], data['msg'], 3000)
+            $.snack(data['type'], data['msg'], 5000)
     });
 
     $('.field-img').click(function(){
