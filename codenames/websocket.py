@@ -20,12 +20,14 @@ def disconnect():
     if 'team' in session and 'username' in session:
         if session['team'] == 'red':
             members_red = json.loads(game.members_red)
-            members_red.remove(session['username'])
-            game.members_red = json.dumps(members_red)
+            if session['username'] in members_red:
+                members_red.remove(session['username'])
+                game.members_red = json.dumps(members_red)
         else:
             members_blue = json.loads(game.members_blue)
-            members_blue.remove(session['username'])
-            game.members_blue = json.dumps(members_blue)
+            if session['username'] in members_blue:
+                members_blue.remove(session['username'])
+                game.members_blue = json.dumps(members_blue)
         db.session.commit()
 
         emit('msg', {'type': 'info', 'msg': f'{session["username"]} has left the game'}, room=session['game_id'])
