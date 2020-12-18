@@ -31,11 +31,12 @@ def games(game_name=None):
     session['game_id'] = game.id
 
     if form.validate_on_submit():
-        #: create a new game
+        #: start a new round
         if form.game_mode.data:
             game_mode = form.game_mode.data
         else:
             game_mode = game.mode
+
         helper.new_game(game_name, game_mode, new_round=True)
         flash('New round started', category='success')
 

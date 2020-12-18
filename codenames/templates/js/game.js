@@ -163,7 +163,7 @@ $(function() {
 
     $('.game-mode').click(function(){
         $('#game_mode').val($(this).data('mode'));
-        $('#new_game').trigger('click');
+        $('#new_round').trigger('click');
     });
 
     $('#spymaster, #spymaster-mobile').click(function(){

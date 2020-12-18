@@ -40,10 +40,10 @@
 
 
 {% block navbar_right %}
-    <form action="" method="post" id="form-new-game">
+    <form action="" method="post" id="form-new-round">
         {{ form.csrf_token }}
         <div class="btn-group">
-            {{ form.new_game(class_="btn btn-success", type_="button") }}
+            {{ form.new_round(class_="btn btn-success", type_="button") }}
 
             {{ form.game_mode(size=1, class_="form-control") }}
             <button type="button" class="btn btn-success dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

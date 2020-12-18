@@ -13,4 +13,4 @@ class IndexForm(FlaskForm):
 
 class GameForm(FlaskForm):
     game_mode = SelectField(validators=[AnyOf(app.config['GAME_MODES'])], choices=app.game_modes)
-    new_game = SubmitField('New Game')
+    new_round = SubmitField('New Round')
