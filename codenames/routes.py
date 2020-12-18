@@ -22,6 +22,10 @@ def index():
 def games(game_name=None):
     form = GameForm()
     game = models.Game.query.filter_by(name=game_name).first()
+
+    if not game:
+        return redirect(url_for('index'))
+
     session['game_id'] = game.id
 
     if form.validate_on_submit():
@@ -38,8 +42,7 @@ def games(game_name=None):
     #: get the field image chunks from database
     image_chunks = json.loads(game.images)
 
-    return render_template('game.html', rows=image_chunks, game=game, form=form, game_modes=app.game_modes,
-                           members_red=game.members_red, members_blue=game.members_blue)
+    return render_template('game.html', rows=image_chunks, game=game, form=form, game_modes=app.game_modes)
 
 
 @app.route('/static/js/game.js')
