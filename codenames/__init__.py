@@ -1,4 +1,5 @@
 from flask import Flask
+from flask_compress import Compress
 from flask_socketio import SocketIO
 from flask_sqlalchemy import SQLAlchemy
 
@@ -8,6 +9,7 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SESSION_COOKIE_SECURE'] = True
 app.config['SESSION_COOKIE_HTTPONLY'] = True
 app.config['SESSION_COOKIE_SAMESITE'] = 'LAX'
+Compress(app)
 
 app.game_modes = []
 
