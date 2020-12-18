@@ -5,6 +5,9 @@
     max-width: 1020px !important;
 }*/
 
+.bottom-right{
+    bottom: 4rem !important;
+}
 
 .site {
     min-height: 100vh;
