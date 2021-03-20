@@ -8,7 +8,7 @@ Flask-SocketIO==5.0.0
 Flask-SQLAlchemy==2.4.4
 Flask-WTF==0.14.3
 itsdangerous==1.1.0
-Jinja2==2.11.2
+Jinja2==2.11.3
 MarkupSafe==1.1.1
 Pillow==8.1.1
 python-engineio==4.0.0
