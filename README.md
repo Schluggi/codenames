@@ -1,5 +1,6 @@
 # Codenames
-[![Donate](https://img.shields.io/badge/Donate-PayPal-blue.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=KPG2MY37LCC24&source=url)
+<a href="https://www.buymeacoffee.com/schluggi" target="_blank"><img src="https://www.buymeacoffee.com/assets/img/custom_images/white_img.png" alt="Buy Me A Coffee" style="height: auto !important;width: auto !important;" ></a>
+
 
 I like the game cardboard game [codenames](https://en.wikipedia.org/wiki/Codenames_\(board_game\)) and now that COVID-19 is
 part of our life I have played a lot online with my friends on [this](https://www.horsepaste.com/) website. But I 
