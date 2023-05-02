@@ -2,7 +2,7 @@ bidict==0.21.2
 Brotli==1.0.9
 certifi==2022.12.7
 click==7.1.2
-Flask==1.1.2
+Flask==2.3.2
 Flask-Compress==1.8.0
 Flask-SocketIO==5.0.0
 Flask-SQLAlchemy==2.4.4
