@@ -7,9 +7,9 @@
 {% endblock %}
 
 {% block body %}
-	<center>
+	<div class="center">
 		<br><br><br>
-		<form id="start-game-form" action="" method="post">
+		<form id="start-game-form" action="" method="POST">
 			{{ form.csrf_token }}
 			<div class="form-group">
 				{{ form.game_name(class_="form-control") }}
@@ -17,9 +17,9 @@
 			<div class="form-group">
 				{{ form.game_mode(size=1, class_="form-control") }}
 			</div>
-			{{ form.start_game(type_="button", class_="btn btn-success") }}
+			{{ form.start_game(type_="submit", class_="btn btn-success") }}
 		</form>
-	</center>
+	</div>
 {% endblock %}
 
 {% block footer %}

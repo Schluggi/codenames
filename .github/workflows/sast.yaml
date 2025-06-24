@@ -1,0 +1,45 @@
+name: Static Application Security Testing (SAST)
+
+on:
+  push:
+    branches:
+      - "main"
+  pull_request:
+  workflow_dispatch:
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
+
+permissions:
+  contents: read
+
+jobs:
+  sast:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+
+      - name: Dependency Scanning (SCA)
+        uses: anchore/scan-action@v6.3.0
+        with:
+          path: "."
+          fail-build: true
+          output-format: table
+
+
+      - name: Create empty ".truffleignore" in case it doesn't exist
+        run: touch .truffleignore
+
+      - name: "Secret Scanning"
+        id: trufflehog
+        uses: trufflesecurity/trufflehog@v3.89.2
+        continue-on-error: false
+        with:
+          path: ./
+          base: ${{ github.head_ref }}
+          extra_args: --exclude-paths=.truffleignore
