@@ -1,4 +1,5 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
+# pylint:disable=cyclic-import
 from os import listdir, mkdir
 from os.path import join as pjoin, isdir
 from pathlib import Path
@@ -25,8 +26,8 @@ for filename in [f for f in listdir(pjoin(path, DIR_WORDS)) if f.endswith('.txt'
             img = Image.new('RGB', (W_IMG, H_IMG), color=(255, 255, 221))
             draw = ImageDraw.Draw(img)
 
-            w_text, h_text = draw.textsize(code, font=font)
-            draw.text(((W_IMG - w_text) / 2, (H_IMG - h_text) / 2), code, font=font, fill="black")
+            w_text = draw.textlength(code, font=font)
+            draw.text(((W_IMG - w_text) / 2, (H_IMG - FONT_SIZE) / 2), code, font=font, fill="black")
 
             dir_lang = pjoin(path, DIR_OUTPUT, lang)
 
