@@ -3,4 +3,4 @@ import sys
 
 sys.path.insert(0, os.path.dirname(__file__))
 
-from codenames import app as application
+#from codenames import app as application
