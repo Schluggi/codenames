@@ -24,12 +24,13 @@ for mode in app.config['GAME_MODES']:
     app.game_modes.append((mode, DISPLAY_NAME))
 
 socketio = SocketIO(app)
-db = SQLAlchemy(app)
+with app.app_context():
+    db = SQLAlchemy(app)
 
-# from . import models, routes, helper, websocket
+    from . import models, routes, helper, websocket
 
-#: create database if not exists
-db.create_all()
+    #: create database if not exists
+    db.create_all()
 
 if __name__ == '__main__':
     #: start flask
