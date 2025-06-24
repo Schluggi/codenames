@@ -15,13 +15,13 @@ app.game_modes = []
 
 for mode in app.config['GAME_MODES']:
     if mode == 'pictures':
-        display_name = 'Pictures'
+        DISPLAY_NAME = 'Pictures'
     elif mode.startswith('classic_'):
         lang = mode.split('classic_', 1)[1]
-        display_name = f'Classic ({lang})'
+        DISPLAY_NAME = f'Classic ({lang})'
     else:
         continue
-    app.game_modes.append((mode, display_name))
+    app.game_modes.append((mode, DISPLAY_NAME))
 
 socketio = SocketIO(app)
 db = SQLAlchemy(app)
@@ -37,5 +37,3 @@ if __name__ == '__main__':
 
     #: start websocket
     socketio.run(app)
-
-

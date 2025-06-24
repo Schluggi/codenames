@@ -5,3 +5,4 @@ flask
 jinja2
 pillow
 python-socketio
+wtforms
