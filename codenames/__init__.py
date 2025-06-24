@@ -26,7 +26,7 @@ for mode in app.config['GAME_MODES']:
 socketio = SocketIO(app)
 db = SQLAlchemy(app)
 
-#from . import models, routes, helper, websocket
+# from . import models, routes, helper, websocket
 
 #: create database if not exists
 db.create_all()
