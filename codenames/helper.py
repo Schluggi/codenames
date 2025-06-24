@@ -1,3 +1,4 @@
+# pylint: disable=too-many-locals
 import random
 from os import listdir
 from os.path import join as join_path
