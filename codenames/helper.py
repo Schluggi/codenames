@@ -13,6 +13,8 @@ image_types = ['red', 'blue', 'neutral', 'assassin']
 def get_playground(game_id: int, spymaster: bool = False) -> dict:
     #: get the current game and get all field ids of this game
     game = models.Game.query.filter_by(id=game_id).first()
+    if not game:
+        return {}
     fields = game.fields.with_entities(models.Field.id)
 
     playground = {
