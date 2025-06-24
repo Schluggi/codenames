@@ -7,11 +7,9 @@ COPY codenames /app/codenames
 COPY words2img /app/words2img
 COPY requirements.txt /app/requirements.txt
 
-RUN pip install --no-cache-dir --upgrade pip
+RUN pip install --no-cache-dir --upgrade pip gunicorn eventlet
 RUN pip install --no-cache-dir --upgrade -r /app/requirements.txt \
     && rm -f /app/requirements.txt
-RUN pip install --no-cache-dir gunicorn eventlet
-
 
 RUN python words2img/words2img.py
 

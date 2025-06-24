@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-# pylint:disable=cyclic-import
 from os import listdir, mkdir
 from os.path import join as pjoin, isdir
 from pathlib import Path
@@ -35,6 +34,3 @@ for filename in [f for f in listdir(pjoin(path, DIR_WORDS)) if f.endswith('.txt'
                 mkdir(dir_lang)
 
             img.save(pjoin(dir_lang, f'{lang}_{code.lower()}.jpg'))
-
-
-# create path
