@@ -27,7 +27,7 @@ socketio = SocketIO(app)
 with app.app_context():
     db = SQLAlchemy(app)
 
-    from . import models, routes, helper, websocket
+    from . import models, routes, helper, websocket  # noqa: F401
 
     #: create database if not exists
     db.create_all()
