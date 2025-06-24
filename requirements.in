@@ -1,0 +1,7 @@
+Flask-Compress
+Flask-SQLAlchemy
+Flask-SocketIO
+flask
+jinja2
+pillow
+python-socketio
