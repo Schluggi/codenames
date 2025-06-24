@@ -35,3 +35,6 @@ for filename in [f for f in listdir(pjoin(path, DIR_WORDS)) if f.endswith('.txt'
                 mkdir(dir_lang)
 
             img.save(pjoin(dir_lang, f'{lang}_{code.lower()}.jpg'))
+
+
+# create path
