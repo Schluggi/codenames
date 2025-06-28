@@ -57,4 +57,4 @@ jobs:
             --disable=missing-function-docstring \
             --disable=line-too-long \
             --disable=too-few-public-methods \
-            --disable=W0511
+            --disable=cyclic-import

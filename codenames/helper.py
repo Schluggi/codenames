@@ -50,7 +50,7 @@ def new_game(game_name: str, game_mode: str, new_round: bool = False):
     #: get random field images and create chunks
     mode = join_path(*game_mode.split('_', 1))
     images_codes = [join_path(mode, img) for img in listdir(join_path(app.root_path, 'static/img/codes/', mode))
-                    if img.endswith(('.jpeg', '.jpg'))]
+                    if img.endswith(('.jpeg', '.jpg', '.png', '.webp'))]
     images_codes = random.sample(images_codes, 20)
     images_codes = list(zip(images_codes, range(1, 21)))
     image_chunks = [images_codes[i:i + 5] for i in range(0, 20, 5)]

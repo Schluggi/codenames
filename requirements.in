@@ -4,5 +4,7 @@ Flask-SocketIO
 Flask-WTF
 flask
 jinja2
+openai
 pillow
 python-socketio
+requests
