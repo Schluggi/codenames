@@ -10,21 +10,15 @@ from PIL import Image
 openai.api_key = os.getenv('OPENAI_API_TOKEN')
 
 
-def generate_image_from_text(prompt: str) -> Image or None:
-    """Generate an image from a text prompt using GPT-4o"""
-    try:
-        response = openai.images.generate(
-            model="gpt-image-1",
-            prompt=prompt,
-            size="1024x1024",
-            n=1,
-            quality="high",
-        )
-        return Image.open(io.BytesIO(base64.b64decode(response.data[0].b64_json)))
-
-    except Exception as e:
-        print(f"Error generating image: {e}")
-        return None
+def generate_image_from_text(prompt: str) -> Image:
+    response = openai.images.generate(
+        model="gpt-image-1",
+        prompt=prompt,
+        size="1024x1024",
+        n=1,
+        quality="high",
+    )
+    return Image.open(io.BytesIO(base64.b64decode(response.data[0].b64_json)))
 
 
 def replace_background_color(img: Image, background_color: tuple[int, int, int], threshold: int = 10) -> Image:
@@ -53,9 +47,9 @@ if __name__ == "__main__":
     if image:
         image = replace_background_color(image, (255, 245, 234), threshold=10)
 
-        image_name = f'{str(uuid.uuid4())}.webp'
-        image_path = os.path.join('../codenames/static/img/codes/pictures/', image_name)
+        IMAGE_NAME = f'{str(uuid.uuid4())}.webp'
+        image_path = os.path.join('../codenames/static/img/codes/pictures/', IMAGE_NAME)
         image.save(image_path, quality=75)
-        print(f'Image saved as {image_name}')
+        print(f'Image saved as {IMAGE_NAME}')
     else:
         print('error creating image')
