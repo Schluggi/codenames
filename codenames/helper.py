@@ -60,7 +60,7 @@ def new_game(game_name: str, game_mode: str, new_round: bool = False):
     #: get all card images grouped by type
     for card_type in image_types:
         card_list = [img for img in listdir(join_path(app.root_path, f'static/img/cards/{card_type}'))
-                     if img.endswith(('.jpeg', '.jpg'))]
+                     if img.endswith(('.jpeg', '.jpg', '.png', '.webp'))]
         random.shuffle(card_list)
         cards[card_type] = card_list
 

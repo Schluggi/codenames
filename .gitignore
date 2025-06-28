@@ -2,6 +2,4 @@
 *~
 .idea
 __pycache__
-codenames/static/img/**/*.jpeg
-codenames/static/img/**/*.jpg
 codenames/static/img/codes/classic/**/*.webp
