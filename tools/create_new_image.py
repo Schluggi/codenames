@@ -19,29 +19,29 @@ def generate_image_from_text(prompt: str, n: int = 1) -> list:
         quality="high",
     )
 
-    images = []
+    all_images = []
 
-    for img in response.data:
-        images.append(Image.open(io.BytesIO(base64.b64decode(img.b64_json))))
+    for openai_img in response.data:
+        images.append(Image.open(io.BytesIO(base64.b64decode(openai_img.b64_json))))
 
-    return images
+    return all_images
 
 
-def replace_background_color(img: Image, background_color: tuple[int, int, int], threshold: int = 10) -> Image:
-    img = img.convert("RGBA")
-    datas = img.getdata()
+def replace_background_color(image: Image, background_color: tuple[int, int, int], threshold: int = 10) -> Image:
+    image = image.convert("RGBA")
+    data = image.getdata()
 
-    current_background_color = datas[0]
+    current_background_color = data[0]
 
-    new_datas = []
-    for item in datas:
+    new_data = []
+    for item in data:
         if all(abs(item[i] - current_background_color[i]) < threshold for i in range(3)):
-            new_datas.append(background_color + (255,))
+            new_data.append(background_color + (255,))
         else:
-            new_datas.append(item)
+            new_data.append(item)
 
-    img.putdata(new_datas)
-    return img
+    image.putdata(new_data)
+    return image
 
 
 if __name__ == "__main__":
