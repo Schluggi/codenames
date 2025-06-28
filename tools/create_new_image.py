@@ -22,7 +22,7 @@ def generate_image_from_text(prompt: str, n: int = 1) -> list:
     all_images = []
 
     for openai_img in response.data:
-        images.append(Image.open(io.BytesIO(base64.b64decode(openai_img.b64_json))))
+        all_images.append(Image.open(io.BytesIO(base64.b64decode(openai_img.b64_json))))
 
     return all_images
 
