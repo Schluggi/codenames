@@ -2,15 +2,17 @@
 
 <a href="https://www.buymeacoffee.com/schluggi" target="_blank"><img src="https://www.buymeacoffee.com/assets/img/custom_images/white_img.png" alt="Buy Me A Coffee" style="height: auto !important;width: auto !important;" ></a>
 
-I like the game cardboard game [codenames](https://en.wikipedia.org/wiki/Codenames_\(board_game\)) and now that COVID-19 is part of our life I have played a lot online with my friends on [this](https://www.horsepaste.com/) website. But I realized that I want to play codename pictures instead. So I've decided to create my own.
+I like the game cardboard game [codenames](https://en.wikipedia.org/wiki/Codenames_\(board_game\)) and now that COVID-19
+is part of our life I have played a lot online with my friends on [this](https://www.horsepaste.com/) website. But I
+realized that I want to play codename pictures instead. So I've decided to create my own.
 
 # Features
 
 - Realtime online multiplayer
 - Multiple game modes:
-    - Codename classic (with words)
+    - Codename classic (multiple languages)
     - Codename pictures
-        - Does not include any images (for copyright reasons, but you can import your own)
+- Add your own images/words if you want to
 - Just like the codenames board game but online
 
 # Quickstart
@@ -29,29 +31,42 @@ cd codenames
 python3 -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
-python3 ./words2img/words2img.py
+python3 tools/words_to_image.py
 flask --app codenames run
 ```
-
-Optional: [Import images](https://github.com/Schluggi/codenames#import-images) for picture mode
 
 # Configuring
 
 ## Environment variables
+
+### Main Game
 
 | name       | Description                                    | required | default                                              |
 |------------|------------------------------------------------|----------|------------------------------------------------------|
 | GAME_MODES | A comma separated list of available game modes | No       | pictures,classic_de,classic_en,classic_en-undercover |
 | SECRET_KEY | A secret key to encrypt the user sessions      | No       | \<a random key will be created\>                     |
 
+### Tools (optional)
+
+| name             | Description           | required | default |
+|------------------|-----------------------|----------|---------|
+| OPENAI_API_TOKEN | Your OPENAI API token | Yes      | -       |
+
+## Create a new image
+> If you already had images you want to import see [Import images](#import-images)
+
+First you need an OpenAI API token. You can get one [here](https://platform.openai.com/). Make sure you have access to the `gpt-image-1` model.
+To generate a new image you can use the script `tools/create_new_image.py`. Just execute and input your prompt. Do not include colors or styling in your prompt.
+This is handled by the script. The script also unionize the background color and saves the images as a webp-file. Done.
+
 ## Add new words or languages
 
 In this example we'll add france as language for the classic mode.
 
-1. Create a language file: `./words2img/words/fr.txt` (one word each line)
+1. Create a language file: `tools/words/fr.txt` (one word each line)
 2. Run the script (existing files will be overwritten)
     ```commandline
-    python3 ./words2img/words2img.py
+    python3 tools/words_to_image.py
     ```
 3. Append `classic_fr` to your `GAME_MODES` environment variable
 
@@ -72,7 +87,7 @@ And the colored team cards (at least 1 each):
 - `codenames/static/images/cards/neutral`
 - `codenames/static/images/cards/red`
 
-The filename does not matter. But the file extension and type has to be JPEG/JPG.
+The filename does not matter. But the file extension and type has to be JPEG/JPG, PNG or WEBP.
 
 # Credits
 
