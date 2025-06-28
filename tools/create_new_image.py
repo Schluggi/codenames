@@ -52,9 +52,9 @@ if __name__ == "__main__":
 
     if images:
         for img in images:
-            image = replace_background_color(image, (255, 245, 234), threshold=10)
+            img = replace_background_color(img, (255, 245, 234), threshold=10)
             IMAGE_NAME = f'{str(uuid.uuid4())}.webp'
-            image_path = os.path.join('../codenames/static/img/cards/neutral/', IMAGE_NAME)
+            image_path = os.path.join('../codenames/static/img/codes/pictures/', IMAGE_NAME)
             img.save(image_path, quality=75)
             print(f'Image saved as {IMAGE_NAME}')
     else:
