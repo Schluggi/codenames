@@ -10,15 +10,21 @@ from PIL import Image
 openai.api_key = os.getenv('OPENAI_API_TOKEN')
 
 
-def generate_image_from_text(prompt: str) -> Image:
+def generate_image_from_text(prompt: str, n: int = 1) -> list:
     response = openai.images.generate(
         model="gpt-image-1",
         prompt=prompt,
         size="1024x1024",
-        n=1,
+        n=n,
         quality="high",
     )
-    return Image.open(io.BytesIO(base64.b64decode(response.data[0].b64_json)))
+
+    images = []
+
+    for img in response.data:
+        images.append(Image.open(io.BytesIO(base64.b64decode(img.b64_json))))
+
+    return images
 
 
 def replace_background_color(img: Image, background_color: tuple[int, int, int], threshold: int = 10) -> Image:
@@ -41,15 +47,15 @@ def replace_background_color(img: Image, background_color: tuple[int, int, int],
 if __name__ == "__main__":
     user_prompt = input('Describe your image: ').strip()
     print('Generating image (this can take a while) ...')
-    image = generate_image_from_text(
+    images = generate_image_from_text(
         f'{user_prompt}. The design is in a minimalist, retro-inspired vector style, with clean lines and simple grey colors on a light bisque background.')
 
-    if image:
-        image = replace_background_color(image, (255, 245, 234), threshold=10)
-
-        IMAGE_NAME = f'{str(uuid.uuid4())}.webp'
-        image_path = os.path.join('../codenames/static/img/codes/pictures/', IMAGE_NAME)
-        image.save(image_path, quality=75)
-        print(f'Image saved as {IMAGE_NAME}')
+    if images:
+        for img in images:
+            image = replace_background_color(image, (255, 245, 234), threshold=10)
+            IMAGE_NAME = f'{str(uuid.uuid4())}.webp'
+            image_path = os.path.join('../codenames/static/img/cards/neutral/', IMAGE_NAME)
+            img.save(image_path, quality=75)
+            print(f'Image saved as {IMAGE_NAME}')
     else:
         print('error creating image')
