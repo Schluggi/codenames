@@ -7,8 +7,8 @@ COPY codenames /app/codenames
 COPY tools /app/tools
 COPY requirements.txt /app/requirements.txt
 
-RUN pip install --no-cache-dir --upgrade --root-user-action pip gunicorn eventlet
-RUN pip install --no-cache-dir --upgrade --root-user-action -r /app/requirements.txt \
+RUN pip install --no-cache-dir --upgrade pip gunicorn eventlet
+RUN pip install --no-cache-dir --upgrade -r /app/requirements.txt \
     && rm -f /app/requirements.txt
 
 RUN python tools/words_to_image.py
