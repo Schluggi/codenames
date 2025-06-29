@@ -1,0 +1,48 @@
+name: Linting YAML
+
+on:
+  push:
+    branches:
+      - "main"
+    paths:
+      - '**.yaml'
+      - '**.yml'
+  pull_request:
+    paths:
+      - '**.yaml'
+      - '**.yml'
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  linting:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: yaml-lint
+        uses: ibiqlik/action-yamllint@v3
+        with:
+          config_data: |
+            extends: default
+            rules:
+              comments:
+                level: error
+              comments-indentation:
+                level: error
+              document-end: disable
+              document-start: disable
+              line-length: disable
+              truthy:
+                allowed-values:
+                  - 'true'
+                  - 'false'
+                  - 'on'

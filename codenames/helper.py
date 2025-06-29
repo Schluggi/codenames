@@ -1,3 +1,4 @@
+# pylint: disable=too-many-locals
 import random
 from os import listdir
 from os.path import join as join_path
@@ -9,9 +10,11 @@ from . import models, db, app
 image_types = ['red', 'blue', 'neutral', 'assassin']
 
 
-def get_playground(game_id, spymaster=False):
+def get_playground(game_id: int, spymaster: bool = False) -> dict:
     #: get the current game and get all field ids of this game
     game = models.Game.query.filter_by(id=game_id).first()
+    if not game:
+        return {}
     fields = game.fields.with_entities(models.Field.id)
 
     playground = {
@@ -35,19 +38,19 @@ def get_playground(game_id, spymaster=False):
     for field_type in image_types:
         if spymaster:
             #: get all fields
-            playground['fields'][field_type] = fields.filter_by(type=field_type).all()
+            playground['fields'][field_type] = [f[0] for f in fields.filter_by(type=field_type).all()]
         else:
             #: get only fields that are not hidden
-            playground['fields'][field_type] = fields.filter_by(type=field_type, hidden=False).all()
+            playground['fields'][field_type] = [f[0] for f in fields.filter_by(type=field_type, hidden=False).all()]
 
     return playground
 
 
-def new_game(game_name, game_mode, new_round=False):
+def new_game(game_name: str, game_mode: str, new_round: bool = False):
     #: get random field images and create chunks
     mode = join_path(*game_mode.split('_', 1))
     images_codes = [join_path(mode, img) for img in listdir(join_path(app.root_path, 'static/img/codes/', mode))
-                    if img.endswith(('.jpeg', '.jpg'))]
+                    if img.endswith(('.jpeg', '.jpg', '.png', '.webp'))]
     images_codes = random.sample(images_codes, 20)
     images_codes = list(zip(images_codes, range(1, 21)))
     image_chunks = [images_codes[i:i + 5] for i in range(0, 20, 5)]
@@ -56,8 +59,8 @@ def new_game(game_name, game_mode, new_round=False):
 
     #: get all card images grouped by type
     for card_type in image_types:
-        card_list = [img for img in listdir(join_path(app.root_path, 'static/img/cards/{}'.format(card_type)))
-                     if img.endswith(('.jpeg', '.jpg'))]
+        card_list = [img for img in listdir(join_path(app.root_path, f'static/img/cards/{card_type}'))
+                     if img.endswith(('.jpeg', '.jpg', '.png', '.webp'))]
         random.shuffle(card_list)
         cards[card_type] = card_list
 

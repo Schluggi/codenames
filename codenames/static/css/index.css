@@ -10,3 +10,11 @@
 #start-game-form {
     max-width: 300px;
 }
+
+.center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 40vh;
+    flex-direction: column;
+ }

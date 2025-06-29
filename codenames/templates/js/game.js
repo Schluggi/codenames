@@ -89,7 +89,6 @@ $(function() {
         },
         allowEscapeKey: false,
         allowOutsideClick: false,
-        allowEnterKey: false,
         returnInputValueOnDeny: true
     }).then((result) => {
         if (result.isConfirmed) {

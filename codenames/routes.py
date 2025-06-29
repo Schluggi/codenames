@@ -50,7 +50,7 @@ def games(game_name=None):
 
 
 @app.route('/static/js/game.js')
-def game():
+def game_js():
     resp = make_response(render_template('js/game.js'))
     resp.headers['Content-type'] = 'text/javascript;charset=UTF-8'
     return resp
