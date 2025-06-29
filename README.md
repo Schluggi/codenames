@@ -22,7 +22,7 @@ realized that I want to play codename pictures instead. So I've decided to creat
 ## Docker
 
 ```commandline
-docker run -p 5000:5000 -e GAME_MODES="pictures,classic_de,classic_en,classic_en-undercover" <placeholder>:latest 
+docker run -p 5000:5000 -e GAME_MODES="pictures,classic_de,classic_en,classic_en-undercover" ghcr.io/schluggi/codenames:latest 
 ```
 
 ## Git
